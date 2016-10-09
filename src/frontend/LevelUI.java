@@ -8,60 +8,53 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
-import util.Coord;
 
-import java.util.function.BiConsumer;
+import static backend.Cell.Type.EMPTY;
+import static backend.Cell.Type.FIELD;
 
-import static backend.Cell.Type.*;
-/**
- * Created by joey on 2016.10.06..
- */
-public class LevelUI {
+class LevelUI {
 
-    private final int SIZE_X;
-    private final int SIZE_Y;
+    private final int ROW_LENGTH;
+    private final int COL_LENGTH;
+    static int CELL_WIDTH;
+    static int CELL_HEIGHT;
 
-    public static int CELL_WIDTH;
-    public static int CELL_HEIGHT;
-
-    private BiConsumer<Coord, Cell.Type> leftClickAction;
-
-    public static final int OFFSET = 20;
-    public static int WIDTH;
-    public static int HEIGHT;
+    static final int OFFSET = 20;
+    private static int WIDTH;
+    private static int HEIGHT;
 
     private Group root;
     private Group items;
     private Core core;
 
-    public LevelUI(int cellWidth, int cellHeight, Core core) {
+    LevelUI(int cellWidth, int cellHeight, Core core) {
         this.core = core;
-        SIZE_X = core.getCells().length;
-        SIZE_Y = core.getCells()[0].length;
+        ROW_LENGTH = core.getCells().length;
+        COL_LENGTH = core.getCells()[0].length;
         CELL_WIDTH = cellWidth;
         CELL_HEIGHT = cellHeight;
         root = new Group();
         items = new Group();
         createBackground();
-        createBaseLines();
         root.getChildren().add(items);
 
-        WIDTH = CELL_WIDTH * SIZE_X + OFFSET;
-        HEIGHT = CELL_HEIGHT * SIZE_Y + OFFSET;
+        WIDTH = CELL_WIDTH * ROW_LENGTH + OFFSET;
+        HEIGHT = CELL_HEIGHT * COL_LENGTH + OFFSET;
     }
 
     private void createBackground() {
-        Rectangle background = new Rectangle(CELL_WIDTH * SIZE_X + OFFSET, CELL_HEIGHT * SIZE_Y + OFFSET);
+        Rectangle background = new Rectangle(CELL_WIDTH * ROW_LENGTH + OFFSET, CELL_HEIGHT * COL_LENGTH + OFFSET);
         background.setStroke(Color.RED);
         background.setFill(Color.BLACK);
         root.getChildren().add(background);
+        createBaseLines();
     }
 
     private void createBaseLines() {
-        int lineWidth = CELL_WIDTH * SIZE_X;
-        int lineHeight = CELL_HEIGHT * SIZE_Y;
+        int lineWidth = CELL_WIDTH * ROW_LENGTH;
+        int lineHeight = CELL_HEIGHT * COL_LENGTH;
 
-        for (int cellIdx = 0; cellIdx < SIZE_Y + 1; cellIdx++) {
+        for (int cellIdx = 0; cellIdx < COL_LENGTH + 1; cellIdx++) {
             Line line = new Line();
             line.setStroke(Color.WHEAT);
             line.setStartX(OFFSET / 2);
@@ -73,7 +66,7 @@ public class LevelUI {
             root.getChildren().add(line);
         }//for
 
-        for (int cellIdx = 0; cellIdx < SIZE_X + 1; cellIdx++) {
+        for (int cellIdx = 0; cellIdx < ROW_LENGTH + 1; cellIdx++) {
             Line line = new Line();
             line.setStroke(Color.WHEAT);
             line.setStartY(OFFSET / 2);
@@ -87,12 +80,15 @@ public class LevelUI {
     }//method
 
 
-    public Group getRoot() {
+    Group getRoot() {
         return root;
     }
 
-    public void setLeftClickOnCell(BiConsumer<Coord, Cell.Type> action) {
-        leftClickAction = action;
+    public int getFullWidth() {
+        return WIDTH;
+    }
+    public int getFullHeight() {
+        return HEIGHT;
     }
 
     private Shape createItem(Cell.Type type, Integer fieldValue) {
@@ -109,22 +105,19 @@ public class LevelUI {
         item.setArcWidth(20);
         item.setArcHeight(20);
 
-        if (type == WALL)
-//            item.setFill(Color.CHOCOLATE);
-            item.setFill(Color.rgb(50,50,30));
-        else if (type == BOX_SPACE)
-            item.setFill(Color.SILVER);
-        else if (type == BOX)
-            item.setFill(Color.rgb(150,100,50));
-        else if (type == MARKED_BOX)
-            item.setFill(Color.YELLOWGREEN);
-        else if (type == PLAYER)
-            item.setFill(Color.TEAL);
+        switch (type) {
+            case WALL: item.setFill(Color.rgb(50, 50, 30)); break;
+            case BOX_SPACE: item.setFill(Color.SILVER); break;
+            case BOX: item.setFill(Color.rgb(150, 100, 50)); break;
+            case MARKED_BOX: item.setFill(Color.YELLOWGREEN); break;
+            case PLAYER: item.setFill(Color.TEAL); break;
+            default: item.setFill(Color.RED);
+        }
 
         return item;
     }
 
-    public void drawItems() {
+    void drawItems() {
         items.getChildren().clear();
         Cell[][] cells = core.getCells();
         for (int x = 0; x < cells.length; x++) {

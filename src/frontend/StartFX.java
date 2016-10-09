@@ -3,20 +3,15 @@ package frontend;
 import backend.Cell;
 import backend.Core;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import util.Coord;
 
 import static frontend.LevelUI.*;
 
-/**
- * Created by joey on 2016.10.06..
- */
 public class StartFX extends Application {
 
     private LevelUI levelUI;
@@ -39,58 +34,54 @@ public class StartFX extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Sokoban Theory-Tester");
+        primaryStage.setTitle("Sokoban Theory ~ Tester");
         primaryStage.setResizable(false);
 
         setupLevelUI();
-        ScrollPane root = new ScrollPane(levelUI.getRoot());
+        ScrollPane scrollPane = new ScrollPane(levelUI.getRoot());
+        scrollPane.getStylesheets().add(StartFX.class.getClassLoader().getResource("frontend/styling.css").toExternalForm());
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        setScreenSize(1200, 650, scrollPane);
 
-        root.getStylesheets().add(StartFX.class.getClassLoader().getResource("frontend/styling.css").toExternalForm());
-        root.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        root.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-
-        if (LevelUI.WIDTH > 1200) {
-            root.setMinWidth(1200);
-            root.setMaxWidth(1200);
-        } else {
-            root.setMinWidth(LevelUI.WIDTH + 3);
-            root.setMaxWidth(LevelUI.WIDTH + 3);
-        }
-        if (LevelUI.HEIGHT > 650) {
-            root.setMinHeight(650);
-            root.setMaxHeight(650);
-        } else {
-            root.setMinHeight(LevelUI.HEIGHT + 3);
-            root.setMaxHeight(LevelUI.HEIGHT + 3);
-        }
-
-        Scene scene = new Scene(root);
-        setupMouseClickEvent(root);
-        setupKeyPressEvent(root);
+        Scene scene = new Scene(scrollPane);
+        setupMouseClickEvent(scrollPane);
+        setupKeyPressEvent(scrollPane);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }//start
+
+    private void setScreenSize(int width, int height, ScrollPane scrollPane) {
+        int levelWidth = levelUI.getFullWidth();
+        int levelHeight = levelUI.getFullHeight();
+        width = (levelWidth > width) ? width : levelWidth + 3;
+        height = (levelHeight > height) ? height : levelHeight + 3;
+        scrollPane.setMinWidth(width);
+        scrollPane.setMaxWidth(width);
+        scrollPane.setMinHeight(height);
+        scrollPane.setMaxHeight(height);
     }
 
     private void setupMouseClickEvent(ScrollPane scrollPane) {
         scrollPane.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
-            double unseenWidth = WIDTH - scrollPane.getWidth();
-            double unseedHeight = HEIGHT - scrollPane.getHeight();
+            // Calculate grid-coordinates of the clicked cell
+            double unseenWidth = levelUI.getFullWidth() - scrollPane.getWidth();
+            double unseedHeight = levelUI.getFullHeight() - scrollPane.getHeight();
             double cellX = (event.getSceneX() - OFFSET / 2
-                    + unseenWidth * scrollPane.getHvalue()) / CELL_WIDTH;
+                            + unseenWidth * scrollPane.getHvalue()) / CELL_WIDTH;
             double cellY = (event.getSceneY() - OFFSET / 2
-                    + unseedHeight * scrollPane.getVvalue()) / CELL_HEIGHT;
+                            + unseedHeight * scrollPane.getVvalue()) / CELL_HEIGHT;
             Coord coord = new Coord((int)cellX, (int)cellY);
 
-            if (event.getButton() == MouseButton.PRIMARY) {
-                core.put(coord.getX(), coord.getY(), itemType);
-            }
-            else if (event.getButton() == MouseButton.SECONDARY) {
-                try {
-                    core.calcFieldOf(coord.getX(), coord.getY());
-                } catch (IllegalArgumentException iae) {}
-            }
-            else {
-                core.remove(coord.getX(), coord.getY());
+            switch (event.getButton()) {
+                case PRIMARY:   core.put(coord.getX(), coord.getY(), itemType);
+                                break;
+                case SECONDARY: try {core.calcFieldOf(coord.getX(), coord.getY());}
+                                catch (IllegalArgumentException iae) {
+                                    System.out.println(iae.getMessage());
+                                }
+                                break;
+                default:    System.out.println("No middle-button click function is available yet.");
             }
 
             levelUI.drawItems();
