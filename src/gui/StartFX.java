@@ -1,7 +1,7 @@
-package frontend;
+package gui;
 
-import backend.Cell;
-import backend.Core;
+import logic.Cell;
+import logic.Core;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import util.Coord;
 
-import static frontend.LevelUI.*;
+import static gui.LevelUI.*;
 
 public class StartFX extends Application {
 
@@ -42,7 +42,7 @@ public class StartFX extends Application {
 
         setupLevelUI();
         ScrollPane scrollPane = new ScrollPane(levelUI.getRoot());
-        scrollPane.getStylesheets().add(StartFX.class.getClassLoader().getResource("frontend/styling.css").toExternalForm());
+        scrollPane.getStylesheets().add(StartFX.class.getClassLoader().getResource("gui/styling.css").toExternalForm());
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         setScreenSize(1200, 650, scrollPane);

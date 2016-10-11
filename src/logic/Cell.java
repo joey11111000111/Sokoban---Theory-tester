@@ -1,4 +1,4 @@
-package backend;
+package logic;
 
 /**
  * Created by joey on 2016.10.05..

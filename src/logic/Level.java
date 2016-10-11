@@ -1,4 +1,4 @@
-package backend;
+package logic;
 
 
 import util.Coord;
@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by joey on 2016.10.05..
- */
 class Level {
 
     static final int ROW_LENGTH = 15;

@@ -1,6 +1,6 @@
-import backend.Core;
-import backend.LinearFieldAlgorithm;
-import frontend.StartFX;
+import logic.Core;
+import logic.LinearFieldAlgorithm;
+import gui.StartFX;
 
 /**
  * Created by joey on 2016.10.05..

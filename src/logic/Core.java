@@ -1,4 +1,4 @@
-package backend;
+package logic;
 
 import util.Coord;
 
