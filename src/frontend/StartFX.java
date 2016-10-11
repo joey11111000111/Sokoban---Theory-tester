@@ -14,7 +14,10 @@ import static frontend.LevelUI.*;
 
 public class StartFX extends Application {
 
-    private LevelUI levelUI;
+    public static LevelUI levelUI;
+    public static void makeDraw() {
+        levelUI.drawItems();
+    }
     private static Core core;
 
     private Cell.Type itemType = Cell.Type.WALL;

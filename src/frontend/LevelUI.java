@@ -44,7 +44,7 @@ class LevelUI {
 
     private void createBackground() {
         Rectangle background = new Rectangle(CELL_WIDTH * ROW_LENGTH + OFFSET, CELL_HEIGHT * COL_LENGTH + OFFSET);
-        background.setStroke(Color.RED);
+        background.setStroke(Color.ORANGE);
         background.setFill(Color.BLACK);
         root.getChildren().add(background);
         createBaseLines();

@@ -12,8 +12,8 @@ import java.util.List;
  */
 class Level {
 
-    static final int ROW_LENGTH = 20;
-    static final int COL_LENGTH = 15;
+    static final int ROW_LENGTH = 15;
+    static final int COL_LENGTH = 10;
     private Cell[][] cells;
 
     Level() {
@@ -24,7 +24,10 @@ class Level {
     }
 
     boolean isValidCoord(int x, int y) {
-        return !(x < 0 || x >= ROW_LENGTH || y < 0 || y > COL_LENGTH);
+        return !(x < 0 || x >= ROW_LENGTH || y < 0 || y >= COL_LENGTH);
+    }
+    boolean isValidCoord(Coord coord) {
+        return isValidCoord(coord.getX(), coord.getY());
     }
 
     void validateIndexes(int x, int y) {
@@ -43,16 +46,25 @@ class Level {
 
         cells[x][y].setType(type);
     }
+    void put(Coord c, Cell.Type type) {
+        put(c.getX(), c.getY(), type);
+    }
 
     void putField(int x, int y, int fieldValue) {
         validateIndexes(x, y);
         cells[x][y].setType(Cell.Type.FIELD);
         cells[x][y].setFieldValue(fieldValue);
     }
+    void putField(Coord c, int fieldValue) {
+        putField(c.getX(), c.getY(), fieldValue);
+    }
 
     Cell.Type getTypeOf(int x, int y) {
         validateIndexes(x, y);
         return cells[x][y].getType();
+    }
+    Cell.Type getTypeOf(Coord c) {
+        return getTypeOf(c.getX(), c.getY());
     }
 
     Integer getFieldValueOf(int x, int y) {
