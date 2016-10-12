@@ -18,5 +18,5 @@ public interface Core {
     Cell[][] getCells();
     List<Coord> getWalls();
     void save() throws LevelIOException;
-
+    void loadLevel(String levelName) throws LevelIOException;
 }

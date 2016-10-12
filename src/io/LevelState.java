@@ -20,4 +20,15 @@ public class LevelState {
                 && allItems[0].length > MIN_COL_LENGTH;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < allItems.length; i++) {
+            for (int j = 0; j < allItems[0].length; j++)
+                sb.append(allItems[i][j]);
+            sb.append('\n');
+        }
+
+        return sb.toString();
+    }
 }

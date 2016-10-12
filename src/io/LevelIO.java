@@ -11,7 +11,7 @@ public interface LevelIO {
     char PLAYER = '@';
     char EMPTY = ' ';
 
-    LevelState readLevel(String levelName);
+    LevelState readLevel(String levelName) throws LevelIOException;
     void saveLevel(LevelState levelState, String name) throws LevelIOException;
 
 }

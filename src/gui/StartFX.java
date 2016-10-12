@@ -102,11 +102,19 @@ public class StartFX extends Application {
                 case "m": itemType = Cell.Type.MARKED_BOX; break;
                 case "p": itemType = Cell.Type.PLAYER; break;
                 case "e": itemType = Cell.Type.EMPTY; break;
-                case "S": try {
-                    core.save();
-                } catch (LevelIOException lioe) {
-                    System.out.println(lioe.getMessage());
-                }
+                case "L":
+                    try {
+                        core.loadLevel("test");
+                    } catch (LevelIOException lioe) {
+                        System.err.println("fail\n" + lioe.getMessage());
+                    }
+                    break;
+                case "S":
+                    try {
+                        core.save();
+                    } catch (LevelIOException lioe) {
+                        System.out.println(lioe.getMessage());
+                    }
                 break;
                 case "c": core.clear();
                     levelUI.drawItems();

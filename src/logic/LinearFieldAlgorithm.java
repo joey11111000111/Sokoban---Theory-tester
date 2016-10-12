@@ -117,4 +117,9 @@ public class LinearFieldAlgorithm implements Core {
         LevelState levelState = converter.convertToLevelState(cells);
         levelIO.saveLevel(levelState, "test");
     }
+
+    @Override
+    public void loadLevel(String levelName) throws LevelIOException {
+        levelIO.readLevel(levelName);
+    }
 }//class
