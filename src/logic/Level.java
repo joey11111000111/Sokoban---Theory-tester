@@ -10,7 +10,7 @@ import java.util.List;
 class Level {
 
     static final int ROW_LENGTH = 15;
-    static final int COL_LENGTH = 10;
+    static final int COL_LENGTH = 5;
     private Cell[][] cells;
 
     Level() {

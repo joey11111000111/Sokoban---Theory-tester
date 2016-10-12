@@ -1,5 +1,6 @@
 package gui;
 
+import io.LevelIOException;
 import logic.Cell;
 import logic.Core;
 import javafx.application.Application;
@@ -101,6 +102,12 @@ public class StartFX extends Application {
                 case "m": itemType = Cell.Type.MARKED_BOX; break;
                 case "p": itemType = Cell.Type.PLAYER; break;
                 case "e": itemType = Cell.Type.EMPTY; break;
+                case "S": try {
+                    core.save();
+                } catch (LevelIOException lioe) {
+                    System.out.println(lioe.getMessage());
+                }
+                break;
                 case "c": core.clear();
                     levelUI.drawItems();
                     break;

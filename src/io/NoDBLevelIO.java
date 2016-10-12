@@ -10,7 +10,7 @@ import java.io.RandomAccessFile;
  */
 public class NoDBLevelIO implements LevelIO {
 
-
+    private final String PARENT_PATH = "Levels/";
 
     @Override
     public LevelState readLevel(String levelName) {
@@ -22,7 +22,7 @@ public class NoDBLevelIO implements LevelIO {
         if (!levelState.isSavable())
             throw new LevelIOException("The given level is not savable in it's current state!");
 
-        File levelFile = new File("../../Levels/" + name + ".slvl");
+        File levelFile = new File(PARENT_PATH + name + ".slvl");
         if (!levelFile.exists()) {
             try {
                 if (!levelFile.createNewFile())
@@ -35,7 +35,7 @@ public class NoDBLevelIO implements LevelIO {
 
         RandomAccessFile writer;
         try {
-            writer = new RandomAccessFile(levelFile, "w");
+            writer = new RandomAccessFile(levelFile, "rw");
         } catch (FileNotFoundException e) {
             throw new LevelIOException("Unexpected exception, it should have not happened at all!"
                      + "\n" + e.getMessage());
@@ -52,6 +52,12 @@ public class NoDBLevelIO implements LevelIO {
         } catch (IOException ioe) {
             throw new LevelIOException("Exception was thrown while writing to file!"
                     + "\n" + ioe.getMessage());
+        }
+
+        try {
+            writer.close();
+        } catch (IOException e) {
+            System.err.println("Cannot close writer!");
         }
     }//saveLevel
 

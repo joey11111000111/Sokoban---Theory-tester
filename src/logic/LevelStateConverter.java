@@ -14,7 +14,7 @@ public class LevelStateConverter {
         int rowLength = cells.length;
         int colLength = cells[0].length;
 
-        char[][] allItems = new char[rowLength + 2][colLength + 2];     // +2 for the surrounding walls
+        char[][] allItems = new char[colLength + 2][rowLength + 2];     // +2 for the surrounding walls, switched sizes to turn the table to regular array representation
         // Add surrounding walls
         for (int i = 0; i < allItems.length; i++) {
             allItems[i][0] = LevelIO.WALL;
@@ -26,13 +26,15 @@ public class LevelStateConverter {
         }
 
         // Add actual level content
-        for (int x = 0; x < rowLength; x++) {
-            for (int y = 0; y < colLength; y++) {
+        for (int i = 0; i < rowLength; i++) {
+            System.out.println();
+            for (int j = 0; j < colLength; j++) {
                 char item;
-                Cell.Type type = cells[x+1][y+1].getType();
+                Cell.Type type = cells[i][j].getType();
                 switch (type) {
                     case WALL: item = LevelIO.WALL; break;
                     case BOX_SPACE: item = LevelIO.BSPACE; break;
+
                     case MARKED_BOX:
                     case BOX: item = LevelIO.BOX; break;
                     case PLAYER: item = LevelIO.PLAYER; break;
@@ -40,7 +42,7 @@ public class LevelStateConverter {
                     case EMPTY: item = LevelIO.EMPTY; break;
                     default: throw new RuntimeException("Unhandled cell type: \"" + type.name() + "\"");
                 }
-                allItems[x + 1][y + 1] = item;
+                allItems[j + 1][i + 1] = item;
             }
         }
 

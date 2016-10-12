@@ -1,5 +1,6 @@
 package logic;
 
+import io.LevelIOException;
 import util.Coord;
 
 import java.util.List;
@@ -16,5 +17,6 @@ public interface Core {
     void calcFieldOf(int x, int y);
     Cell[][] getCells();
     List<Coord> getWalls();
+    void save() throws LevelIOException;
 
 }
