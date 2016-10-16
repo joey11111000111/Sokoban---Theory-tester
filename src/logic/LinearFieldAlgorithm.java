@@ -1,57 +1,13 @@
 package logic;
 
-import io.LevelIO;
-import io.LevelIOException;
-import io.LevelState;
-import io.NoDBLevelIO;
 import util.Coord;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-/**
- * Created by joey on 2016.10.05..
- */
-public class LinearFieldAlgorithm implements Core {
-
-    private Level level;
-    private LevelIO levelIO;
-    private Set<Coord> markedBoxes;
-
-    public LinearFieldAlgorithm() {
-        this.level = new Level();
-        levelIO = new NoDBLevelIO();
-        markedBoxes = new HashSet<>();
-    }
-
-    @Override
-    public List<Coord> getWalls() {
-        return level.getWalls();
-    }
-
-    @Override
-    public void put(int x, int y, Cell.Type type) {
-        level.put(x, y, type);
-    }
-
-    @Override
-    public void remove(int x, int y) {
-        level.remove(x, y);
-    }
-
-    @Override
-    public void removeAllFields() {
-        level.removeAllFields();
-    }
-
-    @Override
-    public void clear() {
-        level.clear();
-    }
-
-    @Override
-    public Cell[][] getCells() {
-        return level.getCells();
-    }
+public class LinearFieldAlgorithm extends AbstractCoreAdapter {
 
     private List<Coord> emptyOrBoxNeighboursOf(Coord coord) {
         int x = coord.getX(), y = coord.getY();
@@ -110,16 +66,5 @@ public class LinearFieldAlgorithm implements Core {
         }//while
     }//method
 
-    @Override
-    public void save() throws LevelIOException {
-        LevelStateConverter converter = new LevelStateConverter();
-        Cell[][] cells = level.getCells();
-        LevelState levelState = converter.convertToLevelState(cells);
-        levelIO.saveLevel(levelState, "test");
-    }
 
-    @Override
-    public void loadLevel(String levelName) throws LevelIOException {
-        levelIO.readLevel(levelName);
-    }
 }//class

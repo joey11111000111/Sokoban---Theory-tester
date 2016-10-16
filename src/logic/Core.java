@@ -17,6 +17,9 @@ public interface Core {
     void calcFieldOf(int x, int y);
     Cell[][] getCells();
     List<Coord> getWalls();
-    void save() throws LevelIOException;
+    void save(String name) throws LevelIOException;
     void loadLevel(String levelName) throws LevelIOException;
+    String getSaveDirectoryPath();
+    String getLevelName();
+    void setLevelName(String levelName);
 }

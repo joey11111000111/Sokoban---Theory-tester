@@ -5,14 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-public class NoDBLevelIO implements LevelIO {
+public class NoSQLLevelIO implements LevelIO {
 
-    private final String PARENT_PATH = "Levels/";
     private final String EXTENSION = ".slvl";
 
     @Override
     public LevelState readLevel(String levelName) throws LevelIOException {
-        File levelFile = new File(PARENT_PATH + levelName + EXTENSION);
+        if (!levelName.endsWith(EXTENSION))
+            levelName = levelName + EXTENSION;
+        File levelFile = new File(PARENT_PATH + levelName);
         if (!levelFile.exists() && levelFile.isFile()) {
             throw new LevelIOException("No level file found by the name " + levelFile.getName());
         }
@@ -45,10 +46,7 @@ public class NoDBLevelIO implements LevelIO {
             System.err.println("Cannot close reader!\n" + ioe.getMessage());
         }
 
-        LevelState levelState = new LevelState(allItems);
-        System.out.println(levelState.toString());
-        return levelState;
-//        return new LevelState(allItems);
+        return new LevelState(allItems);
     }
 
 
@@ -61,7 +59,7 @@ public class NoDBLevelIO implements LevelIO {
     }
 
     private File createAndValidateFile(String fileName) throws LevelIOException {
-        File levelFile = new File(PARENT_PATH + fileName + EXTENSION);
+        File levelFile = new File(PARENT_PATH + fileName);
         if (!levelFile.exists()) {
             try {
                 if (!levelFile.createNewFile())

@@ -14,18 +14,9 @@ public class LevelStateConverter {
         int rowLength = cells.length;
         int colLength = cells[0].length;
 
-        char[][] allItems = new char[colLength + 2][rowLength + 2];     // +2 for the surrounding walls, switched sizes to turn the table to regular array representation
-        // Add surrounding walls
-        for (int i = 0; i < allItems.length; i++) {
-            allItems[i][0] = LevelIO.WALL;
-            allItems[i][allItems[0].length - 1] = LevelIO.WALL;
-        }
-        for (int i = 0; i < allItems[0].length; i++) {
-            allItems[0][i] = LevelIO.WALL;
-            allItems[allItems.length - 1][i] = LevelIO.WALL;
-        }
+        char[][] allItems = new char[colLength][rowLength];
 
-        // Add actual level content
+        // Add level content
         for (int i = 0; i < rowLength; i++) {
             System.out.println();
             for (int j = 0; j < colLength; j++) {
@@ -42,7 +33,7 @@ public class LevelStateConverter {
                     case EMPTY: item = LevelIO.EMPTY; break;
                     default: throw new RuntimeException("Unhandled cell type: \"" + type.name() + "\"");
                 }
-                allItems[j + 1][i + 1] = item;
+                allItems[j][i] = item;
             }
         }
 
@@ -54,16 +45,16 @@ public class LevelStateConverter {
         int rowLength = allItems.length;
         int colLength = allItems[0].length;
 
-        Cell[][] cells = new Cell[rowLength - 2][colLength - 2];
-        for (int x = 1; x < rowLength - 2; x++) {
-            for (int y = 1; y < colLength - 2; y++) {
-                cells[x-1][y-1] = new Cell();
-                switch (allItems[x][y]) {
-                    case LevelIO.WALL: cells[x-1][y-1].setType(Cell.Type.WALL); break;
-                    case LevelIO.BSPACE: cells[x-1][y-1].setType(Cell.Type.BOX_SPACE); break;
-                    case LevelIO.BOX: cells[x-1][y-1].setType(Cell.Type.BOX); break;
-                    case LevelIO.PLAYER: cells[x-1][y-1].setType(Cell.Type.PLAYER); break;
-                    case LevelIO.EMPTY: cells[x-1][y-1].setType(Cell.Type.EMPTY); break;
+        Cell[][] cells = new Cell[colLength][rowLength];
+        for (int i = 0; i < rowLength; i++) {
+            for (int j = 0; j < colLength; j++) {
+                cells[j][i] = new Cell();
+                switch (allItems[i][j]) {
+                    case LevelIO.WALL: cells[j][i].setType(Cell.Type.WALL); break;
+                    case LevelIO.BSPACE: cells[j][i].setType(Cell.Type.BOX_SPACE); break;
+                    case LevelIO.BOX: cells[j][i].setType(Cell.Type.BOX); break;
+                    case LevelIO.PLAYER: cells[j][i].setType(Cell.Type.PLAYER); break;
+                    case LevelIO.EMPTY: cells[j][i].setType(Cell.Type.EMPTY); break;
                 }
             }
         }

@@ -40,6 +40,7 @@ class LevelUI {
 
         WIDTH = CELL_WIDTH * ROW_LENGTH + OFFSET;
         HEIGHT = CELL_HEIGHT * COL_LENGTH + OFFSET;
+        drawItems();
     }
 
     private void createBackground() {
