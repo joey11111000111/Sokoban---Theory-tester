@@ -108,10 +108,12 @@ class LevelUI {
 
         switch (type) {
             case WALL: item.setFill(Color.rgb(50, 50, 30)); break;
-            case BOX_SPACE: item.setFill(Color.SILVER); break;
+            case BSPACE: item.setFill(Color.SILVER); break;
             case BOX: item.setFill(Color.rgb(150, 100, 50)); break;
             case MARKED_BOX: item.setFill(Color.YELLOWGREEN); break;
             case PLAYER: item.setFill(Color.TEAL); break;
+            case PLAYER_ON_BSPACE: item.setFill(Color.rgb(160, 160, 255)); break;
+            case BOX_ON_BSPACE: item.setFill(Color.rgb(190, 170, 70)); break;
             default: item.setFill(Color.RED);
         }
 

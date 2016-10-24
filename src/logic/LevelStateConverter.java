@@ -24,13 +24,14 @@ public class LevelStateConverter {
                 Cell.Type type = cells[i][j].getType();
                 switch (type) {
                     case WALL: item = LevelIO.WALL; break;
-                    case BOX_SPACE: item = LevelIO.BSPACE; break;
-
+                    case BSPACE: item = LevelIO.BSPACE; break;
                     case MARKED_BOX:
                     case BOX: item = LevelIO.BOX; break;
                     case PLAYER: item = LevelIO.PLAYER; break;
                     case FIELD:
                     case EMPTY: item = LevelIO.EMPTY; break;
+                    case PLAYER_ON_BSPACE: item = LevelIO.PLAYER_ON_BSPACE; break;
+                    case BOX_ON_BSPACE: item = LevelIO.BOX_ON_BSPACE; break;
                     default: throw new RuntimeException("Unhandled cell type: \"" + type.name() + "\"");
                 }
                 allItems[j][i] = item;
@@ -51,10 +52,12 @@ public class LevelStateConverter {
                 cells[j][i] = new Cell();
                 switch (allItems[i][j]) {
                     case LevelIO.WALL: cells[j][i].setType(Cell.Type.WALL); break;
-                    case LevelIO.BSPACE: cells[j][i].setType(Cell.Type.BOX_SPACE); break;
+                    case LevelIO.BSPACE: cells[j][i].setType(Cell.Type.BSPACE); break;
                     case LevelIO.BOX: cells[j][i].setType(Cell.Type.BOX); break;
                     case LevelIO.PLAYER: cells[j][i].setType(Cell.Type.PLAYER); break;
                     case LevelIO.EMPTY: cells[j][i].setType(Cell.Type.EMPTY); break;
+                    case LevelIO.PLAYER_ON_BSPACE: cells[j][i].setType(Cell.Type.PLAYER_ON_BSPACE); break;
+                    case LevelIO.BOX_ON_BSPACE: cells[j][i].setType(Cell.Type.BOX_ON_BSPACE); break;
                 }
             }
         }

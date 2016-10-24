@@ -2,12 +2,11 @@ package logic;
 
 import io.LevelIOException;
 import util.Coord;
+import util.Directions;
 
+import java.io.File;
 import java.util.List;
 
-/**
- * Created by joey on 2016.10.05..
- */
 public interface Core {
 
     void put(int x, int y, Cell.Type type);
@@ -17,9 +16,10 @@ public interface Core {
     void calcFieldOf(int x, int y);
     Cell[][] getCells();
     List<Coord> getWalls();
-    void save(String name) throws LevelIOException;
-    void loadLevel(String levelName) throws LevelIOException;
+    void save(File file) throws LevelIOException;
+    void loadLevel(File levelFile) throws LevelIOException;
     String getSaveDirectoryPath();
     String getLevelName();
     void setLevelName(String levelName);
+    void movePlayer(Directions dir);
 }

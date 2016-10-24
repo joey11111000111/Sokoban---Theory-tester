@@ -10,30 +10,29 @@ public class NoSQLLevelIO implements LevelIO {
     private final String EXTENSION = ".slvl";
 
     @Override
-    public LevelState readLevel(String levelName) throws LevelIOException {
-        if (!levelName.endsWith(EXTENSION))
-            levelName = levelName + EXTENSION;
-        File levelFile = new File(PARENT_PATH + levelName);
-        if (!levelFile.exists() && levelFile.isFile()) {
-            throw new LevelIOException("No level file found by the name " + levelFile.getName());
-        }
-
+    public LevelState readLevel(File levelFile) throws LevelIOException {
         RandomAccessFile reader = setupRandomAccessFile(levelFile, "r");
 
         char[][] allItems;
         try {
             // Read level sizes
-            String sizeLine = reader.readLine();
-            String[] sizes = sizeLine.split(" ");
-            int rows = Integer.parseInt(sizes[0]);
-            int cols = Integer.parseInt(sizes[1]);
+            long position = reader.getFilePointer();
+            String line;
+            int rows = 0, cols = 0;
+            while ((line = reader.readLine()) != null) {
+                ++rows;
+                if (line.length() > cols)
+                    cols = line.length();
+            }
+            reader.seek(position);
 
             allItems = new char[rows][cols];
             for (int i = 0; i < allItems.length; i++) {
-                String line = reader.readLine();
-                for (int j = 0; j < allItems[0].length; j++) {
+                line = reader.readLine();
+                for (int j = 0; j < line.length(); j++)
                     allItems[i][j] = line.charAt(j);
-                }
+                for (int j = line.length(); j < allItems[0].length; j++)
+                    allItems[i][j] = EMPTY;
             }
 
         } catch (IOException ioe) {
@@ -47,8 +46,8 @@ public class NoSQLLevelIO implements LevelIO {
         }
 
         return new LevelState(allItems);
-    }
 
+    }
 
     private RandomAccessFile setupRandomAccessFile(File levelFile, String mode) throws LevelIOException {
         try {
@@ -58,8 +57,7 @@ public class NoSQLLevelIO implements LevelIO {
         }
     }
 
-    private File createAndValidateFile(String fileName) throws LevelIOException {
-        File levelFile = new File(PARENT_PATH + fileName);
+    private void createAndValidateFile(File levelFile) throws LevelIOException {
         if (!levelFile.exists()) {
             try {
                 if (!levelFile.createNewFile())
@@ -69,29 +67,16 @@ public class NoSQLLevelIO implements LevelIO {
                         + "\n" + e.getMessage());
             }
         }
-
-        return levelFile;
     }
 
     @Override
-    public void saveLevel(LevelState levelState, String fileName) throws LevelIOException {
-        if (!levelState.isSavable())
-            throw new LevelIOException("The given level is not savable in it's current state!");
-
-        File levelFile = createAndValidateFile(fileName);
-
+    public void saveLevel(LevelState levelState, File levelFile) throws LevelIOException {
+        createAndValidateFile(levelFile);
         RandomAccessFile writer = setupRandomAccessFile(levelFile, "rw");
 
-        // Write level sizes to file
         char[][] allItems = levelState.getAllItems();
         try {
-            String sizes = allItems.length + " " + allItems[0].length;
-            for (int i = 0; i < sizes.length(); i++) {
-                writer.write(sizes.charAt(i));
-            }
-            writer.write('\n');
-
-        // Write level state to file
+            // Write level state to file
             for (int x = 0; x < allItems.length; x++) {
                 for (int y = 0; y < allItems[0].length; y++)
                     writer.write(allItems[x][y]);
@@ -107,6 +92,6 @@ public class NoSQLLevelIO implements LevelIO {
         } catch (IOException e) {
             System.err.println("Cannot close writer!");
         }
-    }//saveLevel
+    }
 
 }//class

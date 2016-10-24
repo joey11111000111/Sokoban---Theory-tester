@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import logic.Cell;
 import logic.Core;
 import util.Coord;
+import util.Directions;
 
 import java.io.File;
 
@@ -119,7 +120,7 @@ public class StartFX extends Application {
         if (newFile == null)
             return;
 
-        core.save(newFile.getName());
+        core.save(newFile);
 
     }
 
@@ -129,7 +130,7 @@ public class StartFX extends Application {
         if (selectedFile == null)
             return;
 
-        core.loadLevel(selectedFile.getName());
+        core.loadLevel(selectedFile);
         createNewLevelUIInstance();
         rootContainer.setContent(levelUI.getRoot());
         setupSceneAndStage();
@@ -140,8 +141,11 @@ public class StartFX extends Application {
         scrollPane.addEventHandler(KeyEvent.KEY_TYPED, event -> {
             String key = event.getCharacter();
             switch (key) {
+                case "q": core.movePlayer(Directions.LEFT);
+                    levelUI.drawItems();
+                    break;
                 case "w": itemType = Cell.Type.WALL; break;
-                case "s": itemType = Cell.Type.BOX_SPACE; break;
+                case "s": itemType = Cell.Type.BSPACE; break;
                 case "b": itemType = Cell.Type.BOX; break;
                 case "m": itemType = Cell.Type.MARKED_BOX; break;
                 case "p": itemType = Cell.Type.PLAYER; break;

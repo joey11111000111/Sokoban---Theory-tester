@@ -6,7 +6,7 @@ package logic;
 public class Cell {
 
     public static enum Type {
-        WALL, BOX_SPACE, BOX, MARKED_BOX, FIELD, EMPTY, PLAYER
+        WALL, BSPACE, BOX, MARKED_BOX, FIELD, EMPTY, PLAYER, PLAYER_ON_BSPACE, BOX_ON_BSPACE, MARKED_BOX_ON_BSPACE
     }
 
     private Type type;

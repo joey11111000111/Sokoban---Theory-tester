@@ -32,7 +32,7 @@ public class LinearFieldAlgorithm extends AbstractCoreAdapter {
     }//method
 
     private boolean isFieldOmittingCell(int x, int y) {
-        return (level.isValidCoord(x, y) && level.getTypeOf(x, y) == Cell.Type.BOX_SPACE);
+        return (level.isValidCoord(x, y) && level.getTypeOf(x, y) == Cell.Type.BSPACE);
     }
 
     @Override

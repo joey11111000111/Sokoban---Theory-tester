@@ -5,7 +5,9 @@ import io.LevelIOException;
 import io.LevelState;
 import io.NoSQLLevelIO;
 import util.Coord;
+import util.Directions;
 
+import java.io.File;
 import java.util.List;
 
 abstract class AbstractCoreAdapter implements Core {
@@ -64,21 +66,23 @@ abstract class AbstractCoreAdapter implements Core {
     }
 
     @Override
-    public void save(String name) throws LevelIOException {
-        if (!name.endsWith(".slvl"))
-            name = name + ".slvl";
+    public void save(File file) throws LevelIOException {
         LevelStateConverter converter = new LevelStateConverter();
         Cell[][] cells = level.getCells();
         LevelState levelState = converter.convertToLevelState(cells);
-        levelIO.saveLevel(levelState, name);
+        levelIO.saveLevel(levelState, file);
     }
 
     @Override
-    public void loadLevel(String levelName) throws LevelIOException {
-        LevelState levelState = levelIO.readLevel(levelName);
+    public void loadLevel(File levelFile) throws LevelIOException {
+        LevelState levelState = levelIO.readLevel(levelFile);
         LevelStateConverter converter = new LevelStateConverter();
         Cell[][] cells = converter.convertToCells(levelState);
-        level = new Level(cells, levelName);
+        level = new Level(cells, levelFile.getName());
     }
 
+    @Override
+    public void movePlayer(Directions dir) {
+        level.movePlayer(dir);
+    }
 }

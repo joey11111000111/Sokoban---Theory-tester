@@ -2,6 +2,8 @@ package io;
 
 import logic.Cell;
 
+import java.io.File;
+
 public interface LevelIO {
 
     // Item mapping
@@ -10,10 +12,12 @@ public interface LevelIO {
     char BOX = '$';
     char PLAYER = '@';
     char EMPTY = ' ';
+    char PLAYER_ON_BSPACE = '+';
+    char BOX_ON_BSPACE =  '*';
 
     String PARENT_PATH = "Levels/";
 
-    LevelState readLevel(String levelName) throws LevelIOException;
-    void saveLevel(LevelState levelState, String name) throws LevelIOException;
+    LevelState readLevel(File file) throws LevelIOException;
+    void saveLevel(LevelState levelState, File file) throws LevelIOException;
 
 }
