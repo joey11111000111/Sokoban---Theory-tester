@@ -1,6 +1,6 @@
 package logic;
 
-import util.Coord;
+import util.UnmodScreenCoord;
 import util.Directions;
 
 public class LevelStructure {
@@ -23,7 +23,7 @@ public class LevelStructure {
         setToDefaultState(structure);
     }
 
-    public boolean isCellOfLevel(Coord c) {
+    public boolean isCellOfLevel(UnmodScreenCoord c) {
         return isCellOfLevel(c.getW(), c.getH());
     }
     public boolean isCellOfLevel(int w, int h) {
@@ -32,7 +32,7 @@ public class LevelStructure {
         return structure[w][h];
     }
 
-    public void excludeCell(Coord c) {
+    public void excludeCell(UnmodScreenCoord c) {
         excludeCell(c.getW(), c.getH());
     }
     public void excludeCell(int w, int h) {
@@ -41,7 +41,7 @@ public class LevelStructure {
             structure[w][h] = false;
     }
 
-    public void includeCell(Coord c) {
+    public void includeCell(UnmodScreenCoord c) {
         includeCell(c.getW(), c.getH());
     }
     public void includeCell(int w, int h) {
@@ -50,7 +50,7 @@ public class LevelStructure {
             structure[w][h] = true;
     }
 
-    public boolean isActiveLevelCell(Coord coord) {
+    public boolean isActiveLevelCell(UnmodScreenCoord coord) {
         return isActiveLevelCell(coord.getW(), coord.getH());
     }
     public boolean isActiveLevelCell(int w, int h) {

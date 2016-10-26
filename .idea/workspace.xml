@@ -59,11 +59,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Level.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Level.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/logic/Level.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5598">
-              <caret line="323" column="5" selection-start-line="323" selection-start-column="5" selection-end-line="323" selection-end-column="5" />
+            <state relative-caret-position="252">
+              <caret line="102" column="27" selection-start-line="102" selection-start-column="27" selection-end-line="102" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -71,64 +71,64 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LevelBackup.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/logic/LevelBackup.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-458">
-              <caret line="271" column="16" selection-start-line="271" selection-start-column="16" selection-end-line="271" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="AbstractCoreAdapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/logic/AbstractCoreAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="128" column="50" selection-start-line="128" selection-start-column="50" selection-end-line="128" selection-end-column="50" />
+            <state relative-caret-position="1836">
+              <caret line="127" column="50" selection-start-line="127" selection-start-column="50" selection-end-line="127" selection-end-column="50" />
               <folding>
-                <element signature="e#474#475#0" expanded="true" />
-                <element signature="e#521#522#0" expanded="true" />
-                <element signature="e#591#592#0" expanded="true" />
-                <element signature="e#633#634#0" expanded="true" />
-                <element signature="e#704#705#0" expanded="true" />
-                <element signature="e#745#746#0" expanded="true" />
-                <element signature="e#798#799#0" expanded="true" />
-                <element signature="e#839#840#0" expanded="true" />
-                <element signature="e#890#891#0" expanded="true" />
-                <element signature="e#929#930#0" expanded="true" />
-                <element signature="e#979#980#0" expanded="true" />
-                <element signature="e#1022#1023#0" expanded="true" />
-                <element signature="e#1086#1087#0" expanded="true" />
-                <element signature="e#1131#1132#0" expanded="true" />
-                <element signature="e#1191#1192#0" expanded="true" />
-                <element signature="e#1228#1229#0" expanded="true" />
-                <element signature="e#2449#2450#0" expanded="true" />
-                <element signature="e#2491#2492#0" expanded="true" />
-                <marker date="1477472938662" expanded="false" signature="1285:1296" ph=" { " />
-                <marker date="1477472938662" expanded="false" signature="1324:1330" ph=" }" />
-                <marker date="1477472938662" expanded="false" signature="1392:1403" ph=" { " />
-                <marker date="1477472938662" expanded="false" signature="1433:1439" ph=" }" />
-                <marker date="1477472938662" expanded="false" signature="1488:1499" ph=" { " />
-                <marker date="1477472938662" expanded="false" signature="1523:1529" ph=" }" />
-                <marker date="1477472938662" expanded="false" signature="1594:1605" ph=" { " />
-                <marker date="1477472938662" expanded="false" signature="1627:1633" ph=" }" />
-                <marker date="1477472938662" expanded="false" signature="1770:1781" ph=" { " />
-                <marker date="1477472938662" expanded="false" signature="1805:1811" ph=" }" />
-                <marker date="1477472938662" expanded="false" signature="1850:1861" ph=" { " />
-                <marker date="1477472938662" expanded="false" signature="1875:1881" ph=" }" />
-                <marker date="1477472938662" expanded="false" signature="1933:1944" ph=" { " />
-                <marker date="1477472938662" expanded="false" signature="1974:1980" ph=" }" />
+                <element signature="e#462#463#0" expanded="true" />
+                <element signature="e#509#510#0" expanded="true" />
+                <element signature="e#590#591#0" expanded="true" />
+                <element signature="e#632#633#0" expanded="true" />
+                <element signature="e#703#704#0" expanded="true" />
+                <element signature="e#744#745#0" expanded="true" />
+                <element signature="e#797#798#0" expanded="true" />
+                <element signature="e#838#839#0" expanded="true" />
+                <element signature="e#889#890#0" expanded="true" />
+                <element signature="e#928#929#0" expanded="true" />
+                <element signature="e#978#979#0" expanded="true" />
+                <element signature="e#1021#1022#0" expanded="true" />
+                <element signature="e#1085#1086#0" expanded="true" />
+                <element signature="e#1130#1131#0" expanded="true" />
+                <element signature="e#1190#1191#0" expanded="true" />
+                <element signature="e#1227#1228#0" expanded="true" />
+                <element signature="e#2459#2460#0" expanded="true" />
+                <element signature="e#2501#2502#0" expanded="true" />
+                <marker date="1477497999576" expanded="false" signature="1284:1295" ph=" { " />
+                <marker date="1477497999576" expanded="false" signature="1323:1329" ph=" }" />
+                <marker date="1477497999576" expanded="false" signature="1391:1402" ph=" { " />
+                <marker date="1477497999576" expanded="false" signature="1432:1438" ph=" }" />
+                <marker date="1477497999576" expanded="false" signature="1498:1509" ph=" { " />
+                <marker date="1477497999576" expanded="false" signature="1533:1539" ph=" }" />
+                <marker date="1477497999576" expanded="false" signature="1604:1615" ph=" { " />
+                <marker date="1477497999576" expanded="false" signature="1637:1643" ph=" }" />
+                <marker date="1477497999576" expanded="false" signature="1780:1791" ph=" { " />
+                <marker date="1477497999576" expanded="false" signature="1815:1821" ph=" }" />
+                <marker date="1477497999576" expanded="false" signature="1860:1871" ph=" { " />
+                <marker date="1477497999576" expanded="false" signature="1885:1891" ph=" }" />
+                <marker date="1477497999576" expanded="false" signature="1943:1954" ph=" { " />
+                <marker date="1477497999576" expanded="false" signature="1984:1990" ph=" }" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Core.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Core.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/logic/Core.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
+            <state relative-caret-position="324">
+              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UnmodScreenCoord.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/util/UnmodScreenCoord.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="36">
+              <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -137,12 +137,12 @@
       <file leaf-file-name="LevelStructure.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/logic/LevelStructure.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
+            <state relative-caret-position="810">
               <caret line="56" column="19" selection-start-line="56" selection-start-column="19" selection-end-line="56" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1497#1498#0" expanded="true" />
-                <element signature="e#1565#1566#0" expanded="true" />
+                <element signature="e#1552#1553#0" expanded="true" />
+                <element signature="e#1620#1621#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -195,7 +195,6 @@
         <option value="$PROJECT_DIR$/src/util/Directions.java" />
         <option value="$PROJECT_DIR$/src/gui/StartFX.java" />
         <option value="$PROJECT_DIR$/src/logic/LevelBackup.java" />
-        <option value="$PROJECT_DIR$/src/util/Coord.java" />
         <option value="$PROJECT_DIR$/src/logic/Cell.java" />
         <option value="$PROJECT_DIR$/src/logic/LevelStructure.java" />
         <option value="$PROJECT_DIR$/src/logic/IdentifiableItem.java" />
@@ -203,8 +202,10 @@
         <option value="$PROJECT_DIR$/src/logic/BoxSpace.java" />
         <option value="$PROJECT_DIR$/src/logic/Field.java" />
         <option value="$PROJECT_DIR$/src/logic/AbstractCoreAdapter.java" />
-        <option value="$PROJECT_DIR$/src/logic/Level.java" />
         <option value="$PROJECT_DIR$/src/logic/Core.java" />
+        <option value="$PROJECT_DIR$/src/util/Coord.java" />
+        <option value="$PROJECT_DIR$/src/util/UnmodScreenCoord.java" />
+        <option value="$PROJECT_DIR$/src/logic/Level.java" />
       </list>
     </option>
   </component>
@@ -251,6 +252,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -297,15 +301,66 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TheoryTester" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TheoryTester" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="logic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TheoryTester" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TheoryTester" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="io" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TheoryTester" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TheoryTester" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gui" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -641,7 +696,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="741" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -654,7 +709,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2496329" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2496329" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32970452" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -817,7 +872,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1008">
           <caret line="57" column="69" selection-start-line="57" selection-start-column="69" selection-end-line="57" selection-end-column="69" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -901,12 +955,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="5" column="104" selection-start-line="5" selection-start-column="104" selection-end-line="5" selection-end-column="104" />
-          <folding>
-            <element signature="e#561#562#0" expanded="true" />
-            <element signature="e#642#643#0" expanded="true" />
-            <element signature="e#678#679#0" expanded="true" />
-            <element signature="e#751#752#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -914,101 +962,93 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="828">
           <caret line="53" column="29" selection-start-line="53" selection-start-column="29" selection-end-line="53" selection-end-column="29" />
-          <folding>
-            <element signature="e#307#308#0" expanded="true" />
-            <element signature="e#380#381#0" expanded="true" />
-            <element signature="e#1215#1216#0" expanded="true" />
-            <element signature="e#1247#1248#0" expanded="true" />
-            <element signature="e#1469#1470#0" expanded="true" />
-            <element signature="e#1505#1506#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/Coord.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/logic/AbstractCoreAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="128" column="50" selection-start-line="128" selection-start-column="50" selection-end-line="128" selection-end-column="50" />
+        <state relative-caret-position="1836">
+          <caret line="127" column="50" selection-start-line="127" selection-start-column="50" selection-end-line="127" selection-end-column="50" />
           <folding>
-            <element signature="e#474#475#0" expanded="true" />
-            <element signature="e#521#522#0" expanded="true" />
-            <element signature="e#591#592#0" expanded="true" />
-            <element signature="e#633#634#0" expanded="true" />
-            <element signature="e#704#705#0" expanded="true" />
-            <element signature="e#745#746#0" expanded="true" />
-            <element signature="e#798#799#0" expanded="true" />
-            <element signature="e#839#840#0" expanded="true" />
-            <element signature="e#890#891#0" expanded="true" />
-            <element signature="e#929#930#0" expanded="true" />
-            <element signature="e#979#980#0" expanded="true" />
-            <element signature="e#1022#1023#0" expanded="true" />
-            <element signature="e#1086#1087#0" expanded="true" />
-            <element signature="e#1131#1132#0" expanded="true" />
-            <element signature="e#1191#1192#0" expanded="true" />
-            <element signature="e#1228#1229#0" expanded="true" />
-            <element signature="e#2449#2450#0" expanded="true" />
-            <element signature="e#2491#2492#0" expanded="true" />
-            <marker date="1477472938662" expanded="false" signature="1285:1296" ph=" { " />
-            <marker date="1477472938662" expanded="false" signature="1324:1330" ph=" }" />
-            <marker date="1477472938662" expanded="false" signature="1392:1403" ph=" { " />
-            <marker date="1477472938662" expanded="false" signature="1433:1439" ph=" }" />
-            <marker date="1477472938662" expanded="false" signature="1488:1499" ph=" { " />
-            <marker date="1477472938662" expanded="false" signature="1523:1529" ph=" }" />
-            <marker date="1477472938662" expanded="false" signature="1594:1605" ph=" { " />
-            <marker date="1477472938662" expanded="false" signature="1627:1633" ph=" }" />
-            <marker date="1477472938662" expanded="false" signature="1770:1781" ph=" { " />
-            <marker date="1477472938662" expanded="false" signature="1805:1811" ph=" }" />
-            <marker date="1477472938662" expanded="false" signature="1850:1861" ph=" { " />
-            <marker date="1477472938662" expanded="false" signature="1875:1881" ph=" }" />
-            <marker date="1477472938662" expanded="false" signature="1933:1944" ph=" { " />
-            <marker date="1477472938662" expanded="false" signature="1974:1980" ph=" }" />
+            <element signature="e#462#463#0" expanded="true" />
+            <element signature="e#509#510#0" expanded="true" />
+            <element signature="e#590#591#0" expanded="true" />
+            <element signature="e#632#633#0" expanded="true" />
+            <element signature="e#703#704#0" expanded="true" />
+            <element signature="e#744#745#0" expanded="true" />
+            <element signature="e#797#798#0" expanded="true" />
+            <element signature="e#838#839#0" expanded="true" />
+            <element signature="e#889#890#0" expanded="true" />
+            <element signature="e#928#929#0" expanded="true" />
+            <element signature="e#978#979#0" expanded="true" />
+            <element signature="e#1021#1022#0" expanded="true" />
+            <element signature="e#1085#1086#0" expanded="true" />
+            <element signature="e#1130#1131#0" expanded="true" />
+            <element signature="e#1190#1191#0" expanded="true" />
+            <element signature="e#1227#1228#0" expanded="true" />
+            <element signature="e#2459#2460#0" expanded="true" />
+            <element signature="e#2501#2502#0" expanded="true" />
+            <marker date="1477497999576" expanded="false" signature="1284:1295" ph=" { " />
+            <marker date="1477497999576" expanded="false" signature="1323:1329" ph=" }" />
+            <marker date="1477497999576" expanded="false" signature="1391:1402" ph=" { " />
+            <marker date="1477497999576" expanded="false" signature="1432:1438" ph=" }" />
+            <marker date="1477497999576" expanded="false" signature="1498:1509" ph=" { " />
+            <marker date="1477497999576" expanded="false" signature="1533:1539" ph=" }" />
+            <marker date="1477497999576" expanded="false" signature="1604:1615" ph=" { " />
+            <marker date="1477497999576" expanded="false" signature="1637:1643" ph=" }" />
+            <marker date="1477497999576" expanded="false" signature="1780:1791" ph=" { " />
+            <marker date="1477497999576" expanded="false" signature="1815:1821" ph=" }" />
+            <marker date="1477497999576" expanded="false" signature="1860:1871" ph=" { " />
+            <marker date="1477497999576" expanded="false" signature="1885:1891" ph=" }" />
+            <marker date="1477497999576" expanded="false" signature="1943:1954" ph=" { " />
+            <marker date="1477497999576" expanded="false" signature="1984:1990" ph=" }" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/logic/LevelStructure.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
+        <state relative-caret-position="810">
           <caret line="56" column="19" selection-start-line="56" selection-start-column="19" selection-end-line="56" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1497#1498#0" expanded="true" />
-            <element signature="e#1565#1566#0" expanded="true" />
+            <element signature="e#1552#1553#0" expanded="true" />
+            <element signature="e#1620#1621#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/logic/LevelBackup.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-458">
-          <caret line="271" column="16" selection-start-line="271" selection-start-column="16" selection-end-line="271" selection-end-column="16" />
+        <state relative-caret-position="4500">
+          <caret line="271" column="27" selection-start-line="271" selection-start-column="27" selection-end-line="271" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/logic/Core.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/UnmodScreenCoord.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/logic/Level.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5598">
-          <caret line="323" column="5" selection-start-line="323" selection-start-column="5" selection-end-line="323" selection-end-column="5" />
+        <state relative-caret-position="252">
+          <caret line="102" column="27" selection-start-line="102" selection-start-column="27" selection-end-line="102" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/logic/Core.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>

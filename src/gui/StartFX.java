@@ -10,7 +10,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import logic.Cell;
 import logic.Core;
-import util.Coord;
+import util.UnmodScreenCoord;
 import util.Directions;
 
 import java.io.File;
@@ -87,7 +87,7 @@ public class StartFX extends Application {
                             + unseenWidth * scrollPane.getHvalue()) / CELL_WIDTH;
             double cellY = (event.getSceneY() - OFFSET / 2
                             + unseedHeight * scrollPane.getVvalue()) / CELL_HEIGHT;
-            Coord coord = new Coord((int)cellX, (int)cellY);
+            UnmodScreenCoord coord = new UnmodScreenCoord((int)cellX, (int)cellY);
 
             switch (event.getButton()) {
                 case PRIMARY:   core.put(coord.getW(), coord.getH(), itemType);

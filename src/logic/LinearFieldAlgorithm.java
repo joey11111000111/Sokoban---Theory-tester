@@ -1,6 +1,6 @@
 package logic;
 
-import util.Coord;
+import util.UnmodScreenCoord;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,16 +9,16 @@ import java.util.Set;
 
 public class LinearFieldAlgorithm extends AbstractCoreAdapter {
 
-    private List<Coord> emptyOrBoxNeighboursOf(Coord coord) {
+    private List<UnmodScreenCoord> emptyOrBoxNeighboursOf(UnmodScreenCoord coord) {
         int x = coord.getW(), y = coord.getH();
-        List<Coord> neighbours = new ArrayList<>(4);
-        neighbours.add(new Coord(x - 1, y));
-        neighbours.add(new Coord(x + 1, y));
-        neighbours.add(new Coord(x, y - 1));
-        neighbours.add(new Coord(x, y + 1));
+        List<UnmodScreenCoord> neighbours = new ArrayList<>(4);
+        neighbours.add(new UnmodScreenCoord(x - 1, y));
+        neighbours.add(new UnmodScreenCoord(x + 1, y));
+        neighbours.add(new UnmodScreenCoord(x, y - 1));
+        neighbours.add(new UnmodScreenCoord(x, y + 1));
 
-        List<Coord> invalids = new ArrayList<>();
-        for (Coord c : neighbours) {
+        List<UnmodScreenCoord> invalids = new ArrayList<>();
+        for (UnmodScreenCoord c : neighbours) {
             // Remove if the coord is not valid cell or it is neither EMPTY nor BOX
             if (!(level.isValidCoord(c)
                 && (level.getTypeOf(c) == Cell.Type.EMPTY
@@ -40,17 +40,17 @@ public class LinearFieldAlgorithm extends AbstractCoreAdapter {
         if (!isFieldOmittingCell(cellX, cellY))
             return;
 
-        Set<Coord> currentCells = new HashSet<>();
-        Set<Coord> nextCells = new HashSet<>();
-        currentCells.add(new Coord(cellX, cellY));
+        Set<UnmodScreenCoord> currentCells = new HashSet<>();
+        Set<UnmodScreenCoord> nextCells = new HashSet<>();
+        currentCells.add(new UnmodScreenCoord(cellX, cellY));
 
         int fieldValue = 0;
         while (!currentCells.isEmpty()) {
             ++fieldValue;
-            for (Coord c : currentCells) {
-                List<Coord> neighbours = emptyOrBoxNeighboursOf(c);
+            for (UnmodScreenCoord c : currentCells) {
+                List<UnmodScreenCoord> neighbours = emptyOrBoxNeighboursOf(c);
 
-                for (Coord nc : neighbours) {
+                for (UnmodScreenCoord nc : neighbours) {
                     switch (level.getTypeOf(nc)) {
                         case EMPTY: level.putField(nc, fieldValue);
                                     nextCells.add(nc);
