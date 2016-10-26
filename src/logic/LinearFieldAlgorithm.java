@@ -10,7 +10,7 @@ import java.util.Set;
 public class LinearFieldAlgorithm extends AbstractCoreAdapter {
 
     private List<Coord> emptyOrBoxNeighboursOf(Coord coord) {
-        int x = coord.getX(), y = coord.getY();
+        int x = coord.getW(), y = coord.getH();
         List<Coord> neighbours = new ArrayList<>(4);
         neighbours.add(new Coord(x - 1, y));
         neighbours.add(new Coord(x + 1, y));

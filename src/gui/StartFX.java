@@ -90,9 +90,9 @@ public class StartFX extends Application {
             Coord coord = new Coord((int)cellX, (int)cellY);
 
             switch (event.getButton()) {
-                case PRIMARY:   core.put(coord.getX(), coord.getY(), itemType);
+                case PRIMARY:   core.put(coord.getW(), coord.getH(), itemType);
                                 break;
-                case SECONDARY: try {core.calcFieldOf(coord.getX(), coord.getY());}
+                case SECONDARY: try {core.calcFieldOf(coord.getW(), coord.getH());}
                                 catch (IllegalArgumentException iae) {
                                     System.out.println(iae.getMessage());
                                 }

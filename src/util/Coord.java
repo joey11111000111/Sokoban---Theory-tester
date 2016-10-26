@@ -5,26 +5,40 @@ package util;
  */
 public class Coord {
 
-    private int x;
-    private int y;
+    private int w;
+    private int h;
 
-    public Coord(int x,int y) {
-        this.x = x;
-        this.y = y;
+    public Coord(int w, int h) {
+        this.w = w;
+        this.h = h;
     }
 
-    public int getX() {
-        return x;
+    // Make a deep copy
+    public Coord(Coord c) {
+        w = c.getW();
+        h = c.getH();
     }
 
-    public int getY() {
-        return y;
+    public int getW() {
+        return w;
+    }
+
+    public int getH() {
+        return h;
+    }
+
+    public void setW(int w) {
+        this.w = w;
+    }
+
+    public void setH(int h) {
+        this.h = h;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append('(').append(x).append(", ").append(y).append(')');
+        sb.append('(').append(w).append(", ").append(h).append(')');
         return sb.toString();
     }
 
@@ -35,15 +49,15 @@ public class Coord {
 
         Coord coord = (Coord) o;
 
-        if (x != coord.x) return false;
-        return y == coord.y;
+        if (w != coord.w) return false;
+        return h == coord.h;
 
     }
 
     @Override
     public int hashCode() {
-        int result = x;
-        result = 31 * result + y;
+        int result = w;
+        result = 31 * result + h;
         return result;
     }
 }

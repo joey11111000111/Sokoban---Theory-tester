@@ -1,12 +1,26 @@
 package logic;
 
-/**
- * Created by joey on 2016.10.05..
- */
 public class Cell {
 
     public static enum Type {
-        WALL, BSPACE, BOX, MARKED_BOX, FIELD, EMPTY, PLAYER, PLAYER_ON_BSPACE, BOX_ON_BSPACE, MARKED_BOX_ON_BSPACE
+        WALL, BSPACE, BOX, MARKED_BOX, FIELD, EMPTY, PLAYER, PLAYER_ON_BSPACE, BOX_ON_BSPACE, MARKED_BOX_ON_BSPACE;
+
+        boolean containsBoxSpace() {
+            return this == BSPACE || this == PLAYER_ON_BSPACE
+                    || this == BOX_ON_BSPACE|| this == MARKED_BOX_ON_BSPACE;
+        }
+
+        boolean containsBox() {
+            return this == BOX || this == MARKED_BOX || this == BOX_ON_BSPACE || this == MARKED_BOX_ON_BSPACE;
+        }
+
+        boolean containsMarkedBox() {
+            return this == MARKED_BOX || this == MARKED_BOX_ON_BSPACE;
+        }
+
+        boolean containsPlayer() {
+            return this == PLAYER || this == PLAYER_ON_BSPACE;
+        }
     }
 
     private Type type;
@@ -21,22 +35,22 @@ public class Cell {
         return type;
     }
 
-    void setType(Type typee) {
-        if (this.type == typee)
+    void setType(Type type) {
+        if (type == Type.FIELD)
+            throw new IllegalArgumentException("Field type can only be set to along with the field value!");
+        if (this.type == type)
             return;
-        // If previously this was a field, it has a fieldValue which must be "nulled" by the type change
         if (this.type == Type.FIELD) {
             fieldValue = null;
         }
-        this.type = typee;
-
+        this.type = type;
     }
 
     public Integer getFieldValue() {
         return fieldValue;
     }
 
-    void setFieldValue(Integer fieldValue) {
+    void setToFieldType(Integer fieldValue) {
         if (type != Type.FIELD)
             throw new IllegalStateException("Only FIELD type cells can have a field value!");
         this.fieldValue = fieldValue;

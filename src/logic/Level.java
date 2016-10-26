@@ -1,323 +1,326 @@
 package logic;
 
-
 import util.Coord;
 import util.Directions;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
-class Level {
+public class Level {
 
-    public static String DEFAULT_LEVEL_NAME = "new level.slvl";
+    private static final String DEFAULT_LEVEL_NAME = "mylevel";
+
     private String levelName;
-    private final int ROW_LENGTH;
-    private final int COL_LENGTH ;
-    private Cell[][] cells;
-    private Coord playerCoord;
+    private LevelStructure structure;
+    private Coord player;
+    private Map<Coord, Box> boxes;
+    private Map<Coord, BoxSpace> bspaces;
+    private Map<Coord, List<Field>> fields;
 
-    private boolean isSurroundingWall(int x, int y) {
-        return x == 0 || y == 0 || x == ROW_LENGTH -1 || y == COL_LENGTH - 1;
-    }
+    private Cell[][] mergedContent;
+    private Cell.Type chosenItemType;
+    private Field chosenField;
 
-    Level() {
+    public Level() {
         this(14, 9);
     }
 
-    Level(int rowLength, int colLength) {
-        if (rowLength < 4 || colLength < 4)
-            throw new IllegalArgumentException("The size of the level must be at least 4x4");
-
-        playerCoord = null;
+    public Level(int widthCellCount, int heightCellCount) {
         levelName = DEFAULT_LEVEL_NAME;
-        ROW_LENGTH = rowLength;
-        COL_LENGTH = colLength;
-        cells = new Cell[ROW_LENGTH][COL_LENGTH];
-        for (int x = 0; x < ROW_LENGTH; x++) {
-            for (int y = 0; y < COL_LENGTH; y++) {
-                cells[x][y] = new Cell();
-                if (isSurroundingWall(x, y))
-                    cells[x][y].setType(Cell.Type.WALL);
-            }
-        }
+        structure = new LevelStructure(widthCellCount, heightCellCount);
+        mergedContent = new Cell[structure.getWidthCellCount()][structure.getHeightCellCount()];
+
+        setToDefaultState();
     }
 
-    Level(Cell[][] cells, String levelName) {
+    public Level(Cell[][] mergedContent, String levelName) {
+        this.structure = new LevelStructure(mergedContent.length, mergedContent[0].length);
+        this.mergedContent = mergedContent;
         this.levelName = levelName;
-        ROW_LENGTH = cells.length;
-        if (ROW_LENGTH < 4)
-            throw new IllegalArgumentException("Given level is not wide enough!");
-        COL_LENGTH = cells[0].length;
-        if (COL_LENGTH < 4)
-            throw new IllegalArgumentException("Given level is not tall enough!");
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[0].length; j++) {
-                if (cells[i][j].getType() == Cell.Type.PLAYER) {
-                    if (playerCoord == null)
-                        playerCoord = new Coord(i, j);
-                    else
-                        throw new IllegalArgumentException("A level can only have one player!");
-                }
+
+        initItemHolders();
+        decodeStructureAndItems();
+    }
+
+    public void setToDefaultState() {
+        initItemHolders();
+        structure.setToDefaultState();
+        recalculateAllMergedContent();
+    }
+
+    public void setchosenItemType(Cell.Type type) {
+        if (type != Cell.Type.BSPACE && type != Cell.Type.BOX)
+            throw new IllegalArgumentException("Only a box space or a box can be a source of field!");
+        chosenItemType = type;
+    }
+
+    public void setchosenField(Field field) {
+        if (!field.isTemplateField())
+            throw new IllegalArgumentException("The chosen field must be a template field!");
+        chosenField = field;
+    }
+
+    public Optional<Integer> getIdOfSource(Coord coord) {
+        Map<Coord, ? extends IdentifiableItem> searchMap;
+        switch (chosenItemType) {
+            case BOX: searchMap = boxes; break;
+            case BSPACE: searchMap = bspaces; break;
+            default: throw new IllegalStateException("Coding error!");
+        }
+
+        if (!searchMap.containsKey(coord))
+            return Optional.empty();
+        Integer id = searchMap.get(coord).getId();
+
+        return Optional.of(id);
+    }
+
+    public void putItem(Cell.Type type, int w, int h) {
+        putItem(type, new Coord(w, h));
+    }
+    public void putItem(Cell.Type type, Coord coord) {
+        if (!structure.isActiveLevelCell(coord)) {
+            return;
+        }
+        switch (type) {
+            case WALL: structure.excludeCell(coord); return;
+            case EMPTY: structure.includeCell(coord); return;
+            case FIELD: throw new IllegalArgumentException("Field type cell cannot only be added" +
+                    "along with it's value!");
+        }
+
+        if (type.containsBox()) {
+            Box newBox = new Box();
+            if (type.containsMarkedBox())
+                newBox.setMarked(true);
+            boxes.put(coord, newBox);
+        }
+        if (type.containsBoxSpace())
+            bspaces.put(coord, new BoxSpace());
+        if (type.containsPlayer() && player == null)
+            player = new Coord(coord);      // Deep copy so the key of the maps won't be messed up later
+
+        calcMergeContentOfCoord(coord);
+    }
+
+    public void removeAllFields() {
+        fields.values().forEach(List::clear);
+        // Replace fields to empty cells in the merged content.
+        for (int w = 0; w < mergedContent.length; w++) {
+            for (int h = 0; h < mergedContent[0].length; h++) {
+                if (mergedContent[w][h].getType() == Cell.Type.FIELD)
+                    mergedContent[w][h].setType(Cell.Type.EMPTY);
             }
         }
-        this.cells = cells;
     }
 
-    boolean isValidCoord(int x, int y) {
-        return !(x < 0 || x >= ROW_LENGTH || y < 0 || y >= COL_LENGTH);
-    }
-    boolean isValidCoord(Coord coord) {
-        return isValidCoord(coord.getX(), coord.getY());
+    public void movePlayer(Directions dir) {
+        if (player == null)
+            return;
+
+        Coord newPlayerCoord = calcNeighbourCoordOf(player, dir);
+        if (!structure.isActiveLevelCell(newPlayerCoord))
+            return;
+        if (boxes.containsKey(newPlayerCoord)) {
+            if (!moveBox(newPlayerCoord, dir))
+                return;
+        }
+
+        Coord oldPlayerCoord = player;
+        player = newPlayerCoord;
+        calcMergeContentOfCoord(oldPlayerCoord);
+        calcMergeContentOfCoord(newPlayerCoord);
     }
 
-    void validateIndexes(int x, int y) {
-        if (x < 0 || x >= ROW_LENGTH || y < 0 || y > COL_LENGTH)
-            throw new IndexOutOfBoundsException("(X, Y) = (" + x + ", " + y + ')');
+    private boolean moveBox(Coord boxCoord, Directions dir) {
+        Coord newBoxCoord = calcNeighbourCoordOf(boxCoord, dir);
+        if (!structure.isActiveLevelCell(newBoxCoord))
+            return false;
+        if (boxes.containsKey(newBoxCoord))
+            return false;
+        boxes.put(newBoxCoord, boxes.remove(boxCoord));
+        calcMergeContentOfCoord(newBoxCoord);
+        return true;
+    }
+
+    private Coord calcNeighbourCoordOf(Coord coord, Directions dir) {
+        int modW = 0, modH = 0;
+        switch (dir) {
+            case LEFT: modW = -1; break;
+            case UP: modH = -1; break;
+            case RIGHT: modW = 1; break;
+            case DOWN: modH = 1; break;
+        }
+        return new Coord(coord.getW() + modW, coord.getH() + modH);
+    }
+
+    public void addOrRemoveCellLayersOnSide(int layerCount, Directions dir) {
+        structure.addOrRemoveCellLayersOnSide(layerCount, dir);
+        int modW = 0, modH = 0;
+        switch (dir) {
+            case LEFT: modW = layerCount; break;
+            case UP: modH = layerCount; break;
+            default: return;
+        }
+
+        rearrangeItemCoordinatesOf(boxes, modW, modH);
+        rearrangeItemCoordinatesOf(bspaces, modW, modH);
+        rearrangeItemCoordinatesOf(fields, modW, modH);
+
+        Coord newPlayerCoord = new Coord(player.getW() + modW, player.getH() + modH);
+        if (structure.isActiveLevelCell(newPlayerCoord))
+            player = newPlayerCoord;
+        else
+            player = null;
+
+        mergedContent = new Cell[structure.getWidthCellCount()][structure.getHeightCellCount()];
+        recalculateAllMergedContent();
+    }
+
+    void putField(Field field, Coord coord) {
+        if (!structure.isActiveLevelCell(coord))
+            throw new IllegalArgumentException("Field cannot be put outside the active map!");
+        List<Field> fieldList = fields.get(coord);
+        fieldList.forEach(f -> {
+            if (f.getItemID().equals(field.getItemID()) && (f.getFieldType() == f.getFieldType())) {
+                throw new IllegalArgumentException("The given type of field from that source is already present!");
+            }
+        });
+        fieldList.add(field);
+
+        if (field.isSameTypeAndSource(chosenField))
+            calcMergeContentOfCoord(coord);
+    }
+    void putField(Field field, int w, int h) {
+        putField(field, new Coord(w, h));
     }
 
     public String getLevelName() {
         return levelName;
     }
-    public void setLevelName(String levelName) {
-        if (levelName == null)
-            throw new IllegalArgumentException("Level name must not be null!");
-        if (levelName.length() == 0)
-            throw new IllegalArgumentException("Level name must not be empty string!");
 
-        this.levelName = levelName;
+    public void setLevelName(String name) {
+        this.levelName = name;
     }
 
-    Cell[][] getCells() {
-        return cells;
+    public Cell[][] getMergedContent() {
+        return mergedContent;
     }
 
-    void put(int x, int y, Cell.Type type) {
-        validateIndexes(x, y);
-        if (isSurroundingWall(x, y))
+
+    private void recalculateAllMergedContent() {
+        for (int w = 0; w < mergedContent.length; w++)
+            for (int h = 0; h < mergedContent[0].length; h++)
+                calcMergeContentOfCoord(new Coord(w, h));
+    }
+
+    private void calcMergeContentOfCoord(Coord coord) {
+        int w = coord.getW(), h = coord.getH();
+        if (!structure.isCellOfLevel(w, h)) {
+            mergedContent[w][h].setType(Cell.Type.WALL);
             return;
-        if (type == Cell.Type.FIELD)
-            throw new IllegalArgumentException("Field must be set along with it's value, using another method!");
+        }
+        if (boxes.containsKey(coord)) {
+            setToBoxType(coord);
+            return;
+        }
 
-        if ((new Coord(x, y)).equals(playerCoord))
-            playerCoord = null;
+        if (player.equals(coord)) {
+            setToPlayerType(coord);
+            return;
+        }
 
-        if (type == Cell.Type.PLAYER) {
-            if (playerCoord == null)
-                playerCoord = new Coord(x, y);
+        if (bspaces.containsKey(coord)) {
+            mergedContent[w][h].setType(Cell.Type.BSPACE);
+            return;
+        }
+
+        if (fields.containsKey(coord)) {
+            setToFieldType(coord);
+            return;
+        }
+
+        mergedContent[w][h].setType(Cell.Type.EMPTY);
+    }
+
+    private void buildLevelByMergedContent() {
+        for (int w = 0; w < mergedContent.length; w++) {
+            for (int h = 0; h < mergedContent[0].length; h++) {
+
+            }
+        }
+    }
+
+    private void setToBoxType(Coord coord) {
+        Box box = boxes.get(coord);
+        int w = coord.getW(), h = coord.getH();
+        if (bspaces.containsKey(coord)) {
+            if (box.isMarked())
+                mergedContent[w][h].setType(Cell.Type.MARKED_BOX_ON_BSPACE);
             else
-                return;
+                mergedContent[w][h].setType(Cell.Type.BOX_ON_BSPACE);
+        } else {
+            if (box.isMarked())
+                mergedContent[w][h].setType(Cell.Type.MARKED_BOX);
+            else
+                mergedContent[w][h].setType(Cell.Type.BOX);
         }
-
-
-
-        cells[x][y].setType(type);
-    }
-    void put(Coord c, Cell.Type type) {
-        put(c.getX(), c.getY(), type);
     }
 
-    void putField(int x, int y, int fieldValue) {
-        validateIndexes(x, y);
-        if (isSurroundingWall(x, y))
-            return;
-        cells[x][y].setType(Cell.Type.FIELD);
-        cells[x][y].setFieldValue(fieldValue);
-    }
-    void putField(Coord c, int fieldValue) {
-        putField(c.getX(), c.getY(), fieldValue);
+    private void setToPlayerType(Coord coord) {
+        int w = coord.getW(), h = coord.getH();
+        if (bspaces.containsKey(coord))
+            mergedContent[w][h].setType(Cell.Type.PLAYER_ON_BSPACE);
+        else
+            mergedContent[w][h].setType(Cell.Type.PLAYER);
     }
 
-    Cell.Type getTypeOf(int x, int y) {
-        validateIndexes(x, y);
-        return cells[x][y].getType();
-    }
-    Cell.Type getTypeOf(Coord c) {
-        return getTypeOf(c.getX(), c.getY());
-    }
-
-    Integer getFieldValueOf(int x, int y) {
-        validateIndexes(x, y);
-        if (cells[x][y].getType() != Cell.Type.FIELD)
-            throw new IllegalArgumentException("Cell at given index (" + x + ", " + y+ ") is not a field!");
-
-        return cells[x][y].getFieldValue();
+    private void setToFieldType(Coord coord) {
+        List<Field> fieldList = fields.get(coord);
+        for (Field f : fieldList)
+            if (f.isSameTypeAndSource(chosenField))
+                mergedContent[coord.getW()][coord.getH()].setToFieldType(f.getValue());
     }
 
-    void remove(int x, int y) {
-        validateIndexes(x, y);
-        if (isSurroundingWall(x, y))
-            return;
-        if (getTypeOf(x, y) == Cell.Type.PLAYER)
-            playerCoord = null;
-        cells[x][y].setType(Cell.Type.EMPTY);
+    private void initItemHolders() {
+        player = null;
+        boxes = new HashMap<>();
+        bspaces = new HashMap<>();
+        fields = new HashMap<>();
+        chosenField = null;
     }
 
-    void clear() {
-        playerCoord = null;
-        for (int x = 0; x < ROW_LENGTH; x++)
-            for (int y = 0; y < COL_LENGTH; y++)
-                if (!isSurroundingWall(x, y) && cells[x][y].getType() != Cell.Type.EMPTY)
-                    cells[x][y].setType(Cell.Type.EMPTY);
-    }
-
-    List<Coord> getWalls() {
-        List<Coord> walls = new ArrayList<>();
-        for (int x = 0; x < ROW_LENGTH; x++) {
-            for (int y = 0; y < COL_LENGTH; y++) {
-                if (cells[x][y].getType() == Cell.Type.WALL)
-                    walls.add(new Coord(x, y));
-            }
-        }
-
-        return walls;
-    }
-
-    void removeAllFields() {
-        Arrays.stream(cells)
-                .flatMap(Arrays::stream)
-                .forEach(c -> {
-                    if (c.getType() == Cell.Type.FIELD)
-                        c.setType(Cell.Type.EMPTY);
-                    else if (c.getType() == Cell.Type.MARKED_BOX)
-                        c.setType(Cell.Type.BOX);
-                });
-    }
-
-    private Coord getNewCoords(Coord coord, Directions dir) {
-        int modX = 0, modY = 0;
-        switch (dir) {
-            case LEFT: modX = -1; break;
-            case UP: modY = -1; break;
-            case RIGHT: modX = 1; break;
-            case DOWN: modY = 1; break;
-        }
-
-        int newX = coord.getX() + modX;
-        int newY = coord.getY() + modY;
-        return new Coord(newX, newY);
-    }
-
-    private boolean moveToFrom(Coord to, Coord from) {
-        Cell fromCell = cells[from.getX()][from.getY()];
-        Cell toCell = cells[to.getX()][to.getY()];
-        Cell.Type fromType = fromCell.getType();
-        Cell.Type toType = toCell.getType();
-        System.out.println("fromType = " + fromType);
-        System.out.println("toType = " + toType);
-
-        switch (toType) {
-            case WALL:
-            case BOX:
-            case MARKED_BOX:
-            case BOX_ON_BSPACE:
-            case MARKED_BOX_ON_BSPACE:
-            case PLAYER:
-            case PLAYER_ON_BSPACE:
-                return false;
-            case EMPTY:
-            case FIELD:
-                switch (fromType) {
-                    case PLAYER:
-                    case PLAYER_ON_BSPACE:
-                        toCell.setType(Cell.Type.PLAYER);
-                        break;
-                    case BOX:
-                    case MARKED_BOX:
-                    case MARKED_BOX_ON_BSPACE:
-                        toCell.setType(Cell.Type.BOX);
-                        break;
-                    default:
-                        return false;
+    private void decodeStructureAndItems() {
+        for (int w = 0; w < mergedContent.length; w++) {
+            for (int h = 0; h < mergedContent[0].length; h++) {
+                Cell.Type type = mergedContent[w][h].getType();
+                Coord coord = new Coord(w, h);
+                if (type == Cell.Type.WALL) {
+                    structure.excludeCell(coord);
+                    continue;
                 }
-                break;
-            case BSPACE:
-                switch (fromType) {
-                    case PLAYER:
-                    case PLAYER_ON_BSPACE:
-                        toCell.setType(Cell.Type.PLAYER_ON_BSPACE);
-                        break;
-                    case BOX:
-                    case MARKED_BOX:
-                    case MARKED_BOX_ON_BSPACE:
-                        toCell.setType(Cell.Type.BOX_ON_BSPACE);
-                        break;
-                    default: return false;
+                if (type.containsBox())
+                    boxes.put(coord, new Box());
+                if (type.containsBoxSpace())
+                    bspaces.put(coord, new BoxSpace());
+                if (type.containsPlayer()) {
+                    if (player != null)
+                        throw new IllegalArgumentException("Given map has more than one players!");
+                    player = coord;
                 }
-                break;
-            default: return false;
-        }//switch
-
-        switch (fromType) {
-            case PLAYER:
-                playerCoord = to;
-            case BOX:
-            case MARKED_BOX:
-                fromCell.setType(Cell.Type.EMPTY);
-                break;
-            case PLAYER_ON_BSPACE:
-                playerCoord = to;
-            case BOX_ON_BSPACE:
-            case MARKED_BOX_ON_BSPACE:
-                fromCell.setType(Cell.Type.BSPACE);
+            }
         }
-
-        return true;
     }
 
-    public void movePlayer(Directions dir) {
-        if (playerCoord == null)
-            return;
-
-        Coord newPlayerCoord = getNewCoords(playerCoord, dir);
-        if (getTypeOf(newPlayerCoord) == Cell.Type.BOX ||
-                getTypeOf(newPlayerCoord) == Cell.Type.MARKED_BOX ||
-                getTypeOf(newPlayerCoord) == Cell.Type.BOX_ON_BSPACE ||
-                getTypeOf(newPlayerCoord) == Cell.Type.MARKED_BOX_ON_BSPACE) {
-            Coord newBoxCoord = getNewCoords(newPlayerCoord, dir);
-            boolean movedBox = moveToFrom(newBoxCoord, newPlayerCoord);
-            System.out.println("----------------------------------");
-            if (!movedBox)
-                return;
+    private <V> void rearrangeItemCoordinatesOf(Map<Coord, V> items, int modW, int modH) {
+        for (Map.Entry<Coord, V> entry : items.entrySet()) {
+            Coord oldCoord = entry.getKey();
+            Coord newCoord = new Coord(oldCoord.getW() + modW, oldCoord.getH() + modH);
+            if (structure.isActiveLevelCell(newCoord))
+                items.put(newCoord, items.remove(oldCoord));
         }
-
-        moveToFrom(newPlayerCoord, playerCoord);
-/*
-        Coord newCoord = getNewCoords(playerCoord, dir);
-        // If the new coord is empty or field, make the move
-        Cell.Type type = getTypeOf(newCoord.getX(), newCoord.getY());
-        if (type == Cell.Type.FIELD || type == Cell.Type.EMPTY) {
-            cells[playerCoord.getX()][playerCoord.getY()].setType(Cell.Type.EMPTY);
-            cells[newCoord.getX()][newCoord.getY()].setType(Cell.Type.PLAYER);
-            playerCoord = newCoord;
-        }
-
-        if (type == Cell.Type.BOX || type == Cell.Type.MARKED_BOX) {
-            Coord boxCoord = getNewCoords(newCoord, dir);
-            Cell.Type nextType = getTypeOf(boxCoord.getX(), boxCoord.getY());
-            if (nextType == Cell.Type.FIELD || nextType == Cell.Type.EMPTY) {
-                // move player
-                cells[playerCoord.getX()][playerCoord.getY()].setType(Cell.Type.EMPTY);
-                cells[newCoord.getX()][newCoord.getY()].setType(Cell.Type.PLAYER);
-                playerCoord = newCoord;
-                // move box
-                cells[boxCoord.getX()][boxCoord.getY()].setType(Cell.Type.BOX);
-            }
-            if (nextType == Cell.Type.BSPACE) {
-                // move player
-                cells[playerCoord.getX()][playerCoord.getY()].setType(Cell.Type.EMPTY);
-                cells[newCoord.getX()][newCoord.getY()].setType(Cell.Type.PLAYER);
-                playerCoord = newCoord;
-                // move box
-                cells[boxCoord.getX()][boxCoord.getY()].setType(Cell.Type.BOX_ON_BSPACE);
-            }
-
-        }//if
-
-        if (type == Cell.Type.BOX_ON_BSPACE) {
-
-        }
-*/
-
     }
-}
+
+}//class

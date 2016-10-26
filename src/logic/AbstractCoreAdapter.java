@@ -21,10 +21,47 @@ abstract class AbstractCoreAdapter implements Core {
     }
 
     @Override
-    public String getSaveDirectoryPath() {
-        return LevelIO.PARENT_PATH;
+    public Cell[][] getCellContent() {
+        return level.getMergedContent();
     }
 
+    @Override
+    public void putItem(Cell.Type type, Coord coord) {
+        level.putItem(type, coord);
+    }
+
+    @Override
+    public void putItem(Cell.Type type, int w, int h) {
+        level.putItem(type, w, h);
+    }
+
+    @Override
+    public void setToDefaultState() {
+        level.setToDefaultState();
+    }
+
+    @Override
+    public void removeAllFields() {
+        level.removeAllFields();
+    }
+
+    @Override
+    public String getLevelName() {
+        return level.getLevelName();
+    }
+
+    @Override
+    public void setLevelName(String levelName) {
+        level.setLevelName(levelName);
+    }
+
+    @Override
+    public void movePlayer(Directions dir) {
+        level.movePlayer(dir);
+    }
+
+
+    /*
     @Override
     public String getLevelName() {
         return level.getLevelName();
@@ -61,16 +98,27 @@ abstract class AbstractCoreAdapter implements Core {
     }
 
     @Override
-    public Cell[][] getCells() {
-        return level.getCells();
+    public Cell[][] getCellContent() {
+        return level.getCellContent();
     }
+
+    @Override
+    public void movePlayer(Directions dir) {
+        level.movePlayer(dir);
+    }
+*/
 
     @Override
     public void save(File file) throws LevelIOException {
         LevelStateConverter converter = new LevelStateConverter();
-        Cell[][] cells = level.getCells();
+        Cell[][] cells = level.getMergedContent();
         LevelState levelState = converter.convertToLevelState(cells);
         levelIO.saveLevel(levelState, file);
+    }
+
+    @Override
+    public String getSaveDirectoryPath() {
+        return LevelIO.PARENT_PATH;
     }
 
     @Override
@@ -81,8 +129,6 @@ abstract class AbstractCoreAdapter implements Core {
         level = new Level(cells, levelFile.getName());
     }
 
-    @Override
-    public void movePlayer(Directions dir) {
-        level.movePlayer(dir);
-    }
+
+
 }

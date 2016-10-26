@@ -29,8 +29,8 @@ class LevelUI {
 
     LevelUI(int cellWidth, int cellHeight, Core core) {
         this.core = core;
-        ROW_LENGTH = core.getCells().length;
-        COL_LENGTH = core.getCells()[0].length;
+        ROW_LENGTH = core.getCellContent().length;
+        COL_LENGTH = core.getCellContent()[0].length;
         CELL_WIDTH = cellWidth;
         CELL_HEIGHT = cellHeight;
         root = new Group();
@@ -122,7 +122,7 @@ class LevelUI {
 
     void drawItems() {
         items.getChildren().clear();
-        Cell[][] cells = core.getCells();
+        Cell[][] cells = core.getCellContent();
         for (int x = 0; x < cells.length; x++) {
             for (int y = 0; y < cells[0].length; y++) {
                 if (cells[x][y].getType() == EMPTY)

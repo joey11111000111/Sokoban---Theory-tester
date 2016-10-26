@@ -9,17 +9,23 @@ import java.util.List;
 
 public interface Core {
 
-    void put(int x, int y, Cell.Type type);
-    void remove(int x, int y);
+//    void remove(int x, int y);
+//    void put(int x, int y, Cell.Type type);
+//    void clear();
+
+    Cell[][] getCellContent();
+    void putItem(Cell.Type type, Coord coord);
+    void putItem(Cell.Type type, int w, int h);
+    void setToDefaultState();
     void removeAllFields();
-    void clear();
-    void calcFieldOf(int x, int y);
-    Cell[][] getCells();
-    List<Coord> getWalls();
-    void save(File file) throws LevelIOException;
-    void loadLevel(File levelFile) throws LevelIOException;
-    String getSaveDirectoryPath();
     String getLevelName();
     void setLevelName(String levelName);
     void movePlayer(Directions dir);
+
+    void save(File file) throws LevelIOException;
+    void loadLevel(File levelFile) throws LevelIOException;
+    String getSaveDirectoryPath();
+
+
+    void calcFieldOf(int x, int y);
 }
