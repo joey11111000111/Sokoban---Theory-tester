@@ -1,4 +1,4 @@
-package logic;
+package logic.items;
 
 public class IdentifiableItem {
 

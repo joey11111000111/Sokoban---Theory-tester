@@ -59,11 +59,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Level.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Level.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/logic/Level.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="102" column="27" selection-start-line="102" selection-start-column="27" selection-end-line="102" selection-end-column="27" />
+            <state relative-caret-position="288">
+              <caret line="162" column="43" selection-start-line="162" selection-start-column="16" selection-end-line="162" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -74,42 +74,41 @@
       <file leaf-file-name="AbstractCoreAdapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/logic/AbstractCoreAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1836">
-              <caret line="127" column="50" selection-start-line="127" selection-start-column="50" selection-end-line="127" selection-end-column="50" />
+            <state relative-caret-position="666">
+              <caret line="63" column="59" selection-start-line="63" selection-start-column="59" selection-end-line="63" selection-end-column="59" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StartFX.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/StartFX.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="414">
+              <caret line="152" column="51" selection-start-line="152" selection-start-column="51" selection-end-line="152" selection-end-column="51" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LinearFieldAlgorithm.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/logic/LinearFieldAlgorithm.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="134">
+              <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
               <folding>
-                <element signature="e#462#463#0" expanded="true" />
-                <element signature="e#509#510#0" expanded="true" />
-                <element signature="e#590#591#0" expanded="true" />
-                <element signature="e#632#633#0" expanded="true" />
-                <element signature="e#703#704#0" expanded="true" />
-                <element signature="e#744#745#0" expanded="true" />
-                <element signature="e#797#798#0" expanded="true" />
-                <element signature="e#838#839#0" expanded="true" />
-                <element signature="e#889#890#0" expanded="true" />
-                <element signature="e#928#929#0" expanded="true" />
-                <element signature="e#978#979#0" expanded="true" />
-                <element signature="e#1021#1022#0" expanded="true" />
-                <element signature="e#1085#1086#0" expanded="true" />
-                <element signature="e#1130#1131#0" expanded="true" />
-                <element signature="e#1190#1191#0" expanded="true" />
-                <element signature="e#1227#1228#0" expanded="true" />
-                <element signature="e#2459#2460#0" expanded="true" />
-                <element signature="e#2501#2502#0" expanded="true" />
-                <marker date="1477497999576" expanded="false" signature="1284:1295" ph=" { " />
-                <marker date="1477497999576" expanded="false" signature="1323:1329" ph=" }" />
-                <marker date="1477497999576" expanded="false" signature="1391:1402" ph=" { " />
-                <marker date="1477497999576" expanded="false" signature="1432:1438" ph=" }" />
-                <marker date="1477497999576" expanded="false" signature="1498:1509" ph=" { " />
-                <marker date="1477497999576" expanded="false" signature="1533:1539" ph=" }" />
-                <marker date="1477497999576" expanded="false" signature="1604:1615" ph=" { " />
-                <marker date="1477497999576" expanded="false" signature="1637:1643" ph=" }" />
-                <marker date="1477497999576" expanded="false" signature="1780:1791" ph=" { " />
-                <marker date="1477497999576" expanded="false" signature="1815:1821" ph=" }" />
-                <marker date="1477497999576" expanded="false" signature="1860:1871" ph=" { " />
-                <marker date="1477497999576" expanded="false" signature="1885:1891" ph=" }" />
-                <marker date="1477497999576" expanded="false" signature="1943:1954" ph=" { " />
-                <marker date="1477497999576" expanded="false" signature="1984:1990" ph=" }" />
+                <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LevelUI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/LevelUI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="18">
+              <caret line="108" column="1" selection-start-line="108" selection-start-column="1" selection-end-line="108" selection-end-column="1" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -117,33 +116,9 @@
       <file leaf-file-name="Core.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/logic/Core.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state relative-caret-position="252">
+              <caret line="18" column="69" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UnmodScreenCoord.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/util/UnmodScreenCoord.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LevelStructure.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/logic/LevelStructure.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="810">
-              <caret line="56" column="19" selection-start-line="56" selection-start-column="19" selection-end-line="56" selection-end-column="19" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1552#1553#0" expanded="true" />
-                <element signature="e#1620#1621#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -193,7 +168,6 @@
         <option value="$PROJECT_DIR$/src/io/NoSQLLevelIO.java" />
         <option value="$PROJECT_DIR$/src/io/LevelIO.java" />
         <option value="$PROJECT_DIR$/src/util/Directions.java" />
-        <option value="$PROJECT_DIR$/src/gui/StartFX.java" />
         <option value="$PROJECT_DIR$/src/logic/LevelBackup.java" />
         <option value="$PROJECT_DIR$/src/logic/Cell.java" />
         <option value="$PROJECT_DIR$/src/logic/LevelStructure.java" />
@@ -201,11 +175,16 @@
         <option value="$PROJECT_DIR$/src/logic/Box.java" />
         <option value="$PROJECT_DIR$/src/logic/BoxSpace.java" />
         <option value="$PROJECT_DIR$/src/logic/Field.java" />
-        <option value="$PROJECT_DIR$/src/logic/AbstractCoreAdapter.java" />
-        <option value="$PROJECT_DIR$/src/logic/Core.java" />
         <option value="$PROJECT_DIR$/src/util/Coord.java" />
         <option value="$PROJECT_DIR$/src/util/UnmodScreenCoord.java" />
         <option value="$PROJECT_DIR$/src/logic/Level.java" />
+        <option value="$PROJECT_DIR$/src/logic/items/Box.java" />
+        <option value="$PROJECT_DIR$/src/logic/items/BoxSpace.java" />
+        <option value="$PROJECT_DIR$/src/logic/items/IdentifiableItem.java" />
+        <option value="$PROJECT_DIR$/src/logic/items/Field.java" />
+        <option value="$PROJECT_DIR$/src/logic/Core.java" />
+        <option value="$PROJECT_DIR$/src/logic/AbstractCoreAdapter.java" />
+        <option value="$PROJECT_DIR$/src/gui/StartFX.java" />
       </list>
     </option>
   </component>
@@ -284,60 +263,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TheoryTester" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TheoryTester" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="util" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TheoryTester" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TheoryTester" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TheoryTester" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TheoryTester" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="io" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -696,10 +621,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="741" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3281493" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -709,7 +635,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2496329" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2496329" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32970452" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -724,7 +650,6 @@
       <window_info id="Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3281493" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -852,13 +777,6 @@
     <entry file="file://$PROJECT_DIR$/Levels/Name of level.slvl" />
     <entry file="file://$PROJECT_DIR$/Levels/Random2.slvl" />
     <entry file="file://$PROJECT_DIR$/Levels/saveTest.slvl" />
-    <entry file="file://$PROJECT_DIR$/src/logic/LinearFieldAlgorithm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="27" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Levels/Random 1.slvl" />
     <entry file="file://$PROJECT_DIR$/Levels/Random 1.slvl.slvl" />
     <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/lang/String.java">
@@ -872,6 +790,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1008">
           <caret line="57" column="69" selection-start-line="57" selection-start-column="69" selection-end-line="57" selection-end-column="69" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -892,26 +811,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Levels/fjdksjafdasfas.slvl" />
-    <entry file="file://$PROJECT_DIR$/src/gui/LevelUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="108" column="1" selection-start-line="108" selection-start-column="1" selection-end-line="108" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/io/NoSQLLevelIO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="12" column="46" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/StartFX.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2196">
-          <caret line="143" column="23" selection-start-line="143" selection-start-column="23" selection-end-line="143" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -930,79 +833,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/logic/Box.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/logic/IdentifiableItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/logic/BoxSpace.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/logic/Cell.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="5" column="104" selection-start-line="5" selection-start-column="104" selection-end-line="5" selection-end-column="104" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/logic/Field.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="828">
-          <caret line="53" column="29" selection-start-line="53" selection-start-column="29" selection-end-line="53" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/logic/AbstractCoreAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1836">
-          <caret line="127" column="50" selection-start-line="127" selection-start-column="50" selection-end-line="127" selection-end-column="50" />
-          <folding>
-            <element signature="e#462#463#0" expanded="true" />
-            <element signature="e#509#510#0" expanded="true" />
-            <element signature="e#590#591#0" expanded="true" />
-            <element signature="e#632#633#0" expanded="true" />
-            <element signature="e#703#704#0" expanded="true" />
-            <element signature="e#744#745#0" expanded="true" />
-            <element signature="e#797#798#0" expanded="true" />
-            <element signature="e#838#839#0" expanded="true" />
-            <element signature="e#889#890#0" expanded="true" />
-            <element signature="e#928#929#0" expanded="true" />
-            <element signature="e#978#979#0" expanded="true" />
-            <element signature="e#1021#1022#0" expanded="true" />
-            <element signature="e#1085#1086#0" expanded="true" />
-            <element signature="e#1130#1131#0" expanded="true" />
-            <element signature="e#1190#1191#0" expanded="true" />
-            <element signature="e#1227#1228#0" expanded="true" />
-            <element signature="e#2459#2460#0" expanded="true" />
-            <element signature="e#2501#2502#0" expanded="true" />
-            <marker date="1477497999576" expanded="false" signature="1284:1295" ph=" { " />
-            <marker date="1477497999576" expanded="false" signature="1323:1329" ph=" }" />
-            <marker date="1477497999576" expanded="false" signature="1391:1402" ph=" { " />
-            <marker date="1477497999576" expanded="false" signature="1432:1438" ph=" }" />
-            <marker date="1477497999576" expanded="false" signature="1498:1509" ph=" { " />
-            <marker date="1477497999576" expanded="false" signature="1533:1539" ph=" }" />
-            <marker date="1477497999576" expanded="false" signature="1604:1615" ph=" { " />
-            <marker date="1477497999576" expanded="false" signature="1637:1643" ph=" }" />
-            <marker date="1477497999576" expanded="false" signature="1780:1791" ph=" { " />
-            <marker date="1477497999576" expanded="false" signature="1815:1821" ph=" }" />
-            <marker date="1477497999576" expanded="false" signature="1860:1871" ph=" { " />
-            <marker date="1477497999576" expanded="false" signature="1885:1891" ph=" }" />
-            <marker date="1477497999576" expanded="false" signature="1943:1954" ph=" { " />
-            <marker date="1477497999576" expanded="false" signature="1984:1990" ph=" }" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1026,14 +860,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/logic/Core.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/util/UnmodScreenCoord.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
@@ -1042,10 +868,84 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/logic/items/Box.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/logic/items/BoxSpace.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/logic/items/IdentifiableItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/logic/items/Field.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/logic/Level.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="162" column="43" selection-start-line="162" selection-start-column="16" selection-end-line="162" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/logic/Core.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
-          <caret line="102" column="27" selection-start-line="102" selection-start-column="27" selection-end-line="102" selection-end-column="27" />
+          <caret line="18" column="69" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/logic/AbstractCoreAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="666">
+          <caret line="63" column="59" selection-start-line="63" selection-start-column="59" selection-end-line="63" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/LevelUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="108" column="1" selection-start-line="108" selection-start-column="1" selection-end-line="108" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/StartFX.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="152" column="51" selection-start-line="152" selection-start-column="51" selection-end-line="152" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/logic/LinearFieldAlgorithm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

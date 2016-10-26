@@ -90,7 +90,7 @@ public class StartFX extends Application {
             UnmodScreenCoord coord = new UnmodScreenCoord((int)cellX, (int)cellY);
 
             switch (event.getButton()) {
-                case PRIMARY:   core.put(coord.getW(), coord.getH(), itemType);
+                case PRIMARY:   core.putItem(itemType, coord.getW(), coord.getH());
                                 break;
                 case SECONDARY: try {core.calcFieldOf(coord.getW(), coord.getH());}
                                 catch (IllegalArgumentException iae) {
@@ -150,7 +150,7 @@ public class StartFX extends Application {
                 case "m": itemType = Cell.Type.MARKED_BOX; break;
                 case "p": itemType = Cell.Type.PLAYER; break;
                 case "e": itemType = Cell.Type.EMPTY; break;
-                case "c": core.clear();
+                case "c": core.setToDefaultState();
                     levelUI.drawItems();
                     break;
                 case "C": core.removeAllFields();

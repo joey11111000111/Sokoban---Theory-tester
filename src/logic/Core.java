@@ -16,6 +16,7 @@ public interface Core {
     String getLevelName();
     void setLevelName(String levelName);
     void movePlayer(Directions dir);
+    void addOrRemoveCellLayersOnSide(int layerCount, Directions dir);
 
     void save(File file) throws LevelIOException;
     void loadLevel(File levelFile) throws LevelIOException;

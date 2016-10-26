@@ -1,5 +1,9 @@
 package logic;
 
+import logic.items.Box;
+import logic.items.BoxSpace;
+import logic.items.Field;
+import logic.items.IdentifiableItem;
 import util.UnmodScreenCoord;
 import util.Directions;
 

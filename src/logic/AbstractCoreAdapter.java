@@ -59,53 +59,10 @@ abstract class AbstractCoreAdapter implements Core {
         level.movePlayer(dir);
     }
 
-
-    /*
     @Override
-    public String getLevelName() {
-        return level.getLevelName();
+    public void addOrRemoveCellLayersOnSide(int layerCount, Directions dir) {
+        level.addOrRemoveCellLayersOnSide(layerCount, dir);
     }
-
-    @Override
-    public void setLevelName(String levelName) {
-        level.setLevelName(levelName);
-    }
-
-    @Override
-    public List<UnmodScreenCoord> getWalls() {
-        return level.getWalls();
-    }
-
-    @Override
-    public void put(int x, int y, Cell.Type type) {
-        level.put(x, y, type);
-    }
-
-    @Override
-    public void remove(int x, int y) {
-        level.remove(x, y);
-    }
-
-    @Override
-    public void removeAllFields() {
-        level.removeAllFields();
-    }
-
-    @Override
-    public void clear() {
-        level.clear();
-    }
-
-    @Override
-    public Cell[][] getCellContent() {
-        return level.getCellContent();
-    }
-
-    @Override
-    public void movePlayer(Directions dir) {
-        level.movePlayer(dir);
-    }
-*/
 
     @Override
     public void save(File file) throws LevelIOException {
