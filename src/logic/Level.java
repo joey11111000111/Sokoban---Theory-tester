@@ -28,14 +28,13 @@ public class Level {
     private Field chosenField;
 
     public Level() {
-        this(14, 9);
+        this(14, 10);
     }
 
     public Level(int widthCellCount, int heightCellCount) {
         levelName = DEFAULT_LEVEL_NAME;
         structure = new LevelStructure(widthCellCount, heightCellCount);
-        mergedContent = new Cell[structure.getWidthCellCount()][structure.getHeightCellCount()];
-
+        initMergedContent();
         setToDefaultState();
     }
 
@@ -85,17 +84,30 @@ public class Level {
         putItem(type, new UnmodScreenCoord(w, h));
     }
     public void putItem(Cell.Type type, UnmodScreenCoord coord) {
-        if (!structure.isActiveLevelCell(coord)) {
+        if (!structure.isValidCoord(coord)) {
             return;
         }
         switch (type) {
-            case WALL: structure.excludeCell(coord); return;
-            case EMPTY: structure.includeCell(coord); return;
+            case WALL: structure.excludeCell(coord);
+                if (coord.equals(player))
+                    player = null;
+                calcMergeContentOfCoord(coord);
+                return;
+            case EMPTY: structure.includeCell(coord);
+                boxes.remove(coord);
+                bspaces.remove(coord);
+                fields.remove(coord);
+                if (coord.equals(player))
+                    player = null;
+                calcMergeContentOfCoord(coord);
+                return;
             case FIELD: throw new IllegalArgumentException("Field type cell cannot only be added" +
                     "along with it's value!");
         }
 
         if (type.containsBox()) {
+            if (coord.equals(player))
+                return;
             Box newBox = new Box();
             if (type.containsMarkedBox())
                 newBox.setMarked(true);
@@ -103,7 +115,8 @@ public class Level {
         }
         if (type.containsBoxSpace())
             bspaces.put(coord, new BoxSpace());
-        if (type.containsPlayer() && player == null)
+        if (type.containsPlayer() && player == null
+                && !boxes.containsKey(coord) && structure.isActiveLevelCell(coord))
             player = coord;
 
         calcMergeContentOfCoord(coord);
@@ -114,8 +127,11 @@ public class Level {
         // Replace fields to empty cells in the merged content.
         for (int w = 0; w < mergedContent.length; w++) {
             for (int h = 0; h < mergedContent[0].length; h++) {
-                if (mergedContent[w][h].getType() == Cell.Type.FIELD)
-                    mergedContent[w][h].setType(Cell.Type.EMPTY);
+                switch (mergedContent[w][h].getType()) {
+                    case FIELD: mergedContent[w][h].setType(Cell.Type.EMPTY); break;
+                    case MARKED_BOX: mergedContent[w][h].setType(Cell.Type.BOX); break;
+                    case MARKED_BOX_ON_BSPACE: mergedContent[w][h].setType(Cell.Type.BOX_ON_BSPACE); break;
+                }
             }
         }
     }
@@ -161,25 +177,27 @@ public class Level {
     }
 
     public void addOrRemoveCellLayersOnSide(int layerCount, Directions dir) {
-        structure.addOrRemoveCellLayersOnSide(layerCount, dir);
+        if (!structure.addOrRemoveCellLayersOnSide(layerCount, dir))
+            return;
+
         int modW = 0, modH = 0;
         switch (dir) {
             case LEFT: modW = layerCount; break;
             case UP: modH = layerCount; break;
-            default: return;
         }
-
         rearrangeItemCoordinatesOf(boxes, modW, modH);
         rearrangeItemCoordinatesOf(bspaces, modW, modH);
         rearrangeItemCoordinatesOf(fields, modW, modH);
 
-        UnmodScreenCoord newPlayerCoord = new UnmodScreenCoord(player.getW() + modW, player.getH() + modH);
-        if (structure.isActiveLevelCell(newPlayerCoord))
-            player = newPlayerCoord;
-        else
-            player = null;
+        if (player != null) {
+            UnmodScreenCoord newPlayerCoord = new UnmodScreenCoord(player.getW() + modW, player.getH() + modH);
+            if (structure.isActiveLevelCell(newPlayerCoord))
+                player = newPlayerCoord;
+            else
+                player = null;
+        }
 
-        mergedContent = new Cell[structure.getWidthCellCount()][structure.getHeightCellCount()];
+        initMergedContent();
         recalculateAllMergedContent();
     }
 
@@ -222,7 +240,7 @@ public class Level {
 
     private void calcMergeContentOfCoord(UnmodScreenCoord coord) {
         int w = coord.getW(), h = coord.getH();
-        if (!structure.isCellOfLevel(w, h)) {
+        if (!structure.isActiveLevelCell(w, h)) {
             mergedContent[w][h].setType(Cell.Type.WALL);
             return;
         }
@@ -231,7 +249,7 @@ public class Level {
             return;
         }
 
-        if (player.equals(coord)) {
+        if (coord.equals(player)) {
             setToPlayerType(coord);
             return;
         }
@@ -296,6 +314,15 @@ public class Level {
         chosenField = null;
     }
 
+    private void initMergedContent() {
+        mergedContent = new Cell[structure.getWidthCellCount()][structure.getHeightCellCount()];
+        for (int w = 0; w < mergedContent.length; w++) {
+            for (int h = 0; h < mergedContent[0].length; h++) {
+                mergedContent[w][h] = new Cell();
+            }
+        }
+    }
+
     private void decodeStructureAndItems() {
         for (int w = 0; w < mergedContent.length; w++) {
             for (int h = 0; h < mergedContent[0].length; h++) {
@@ -319,12 +346,17 @@ public class Level {
     }
 
     private <V> void rearrangeItemCoordinatesOf(Map<UnmodScreenCoord, V> items, int modW, int modH) {
+        if (items.size() == 0)
+            return;
+        Map<UnmodScreenCoord, V> tempItemMap = new HashMap<>();
         for (Map.Entry<UnmodScreenCoord, V> entry : items.entrySet()) {
             UnmodScreenCoord oldCoord = entry.getKey();
             UnmodScreenCoord newCoord = new UnmodScreenCoord(oldCoord.getW() + modW, oldCoord.getH() + modH);
             if (structure.isActiveLevelCell(newCoord))
-                items.put(newCoord, items.remove(oldCoord));
+                tempItemMap.put(newCoord, items.get(oldCoord));
         }
+        items.clear();
+        items.putAll(tempItemMap);
     }
 
 }//class

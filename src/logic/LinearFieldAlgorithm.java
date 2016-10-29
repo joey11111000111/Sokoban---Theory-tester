@@ -9,6 +9,7 @@ import java.util.Set;
 
 public class LinearFieldAlgorithm extends AbstractCoreAdapter {
 
+/*
     private List<UnmodScreenCoord> emptyOrBoxNeighboursOf(UnmodScreenCoord coord) {
         int x = coord.getW(), y = coord.getH();
         List<UnmodScreenCoord> neighbours = new ArrayList<>(4);
@@ -34,9 +35,11 @@ public class LinearFieldAlgorithm extends AbstractCoreAdapter {
     private boolean isFieldOmittingCell(int x, int y) {
         return (level.isValidCoord(x, y) && level.getTypeOf(x, y) == Cell.Type.BSPACE);
     }
+*/
 
     @Override
     public void calcFieldOf(int cellX, int cellY) {
+/*
         if (!isFieldOmittingCell(cellX, cellY))
             return;
 
@@ -64,7 +67,9 @@ public class LinearFieldAlgorithm extends AbstractCoreAdapter {
             currentCells = nextCells;
             nextCells = new HashSet<>();
         }//while
+*/
     }//method
+
 
 
 }//class

@@ -3,15 +3,16 @@ package gui;
 import io.LevelIOException;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import logic.Cell;
 import logic.Core;
-import util.UnmodScreenCoord;
 import util.Directions;
+import util.UnmodScreenCoord;
 
 import java.io.File;
 
@@ -27,6 +28,7 @@ public class StartFX extends Application {
     private ScrollPane rootContainer;
     private Scene scene;
     private Stage stage;
+    private boolean dragging = false;
 
     private Cell.Type itemType = Cell.Type.WALL;
 
@@ -51,7 +53,7 @@ public class StartFX extends Application {
     }//start
 
     private void createNewLevelUIInstance() {
-        levelUI = new LevelUI(60, 60, core);
+        levelUI = new LevelUI(55, 55, core);
     }
 
     private void setupSceneAndStage() {
@@ -59,11 +61,12 @@ public class StartFX extends Application {
         rootContainer.getStylesheets().add(cssString);
         rootContainer.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         rootContainer.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        setScreenSize(1200, 650, rootContainer);
+        setScreenSize(1300, 650, rootContainer);
         setupMouseClickEvent(rootContainer);
         setupKeyPressEvent(rootContainer);
 
         scene = new Scene(rootContainer);
+        rootContainer.requestFocus();
         stage.setScene(scene);
     }
 
@@ -80,15 +83,7 @@ public class StartFX extends Application {
 
     private void setupMouseClickEvent(ScrollPane scrollPane) {
         scrollPane.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
-            // Calculate grid-coordinates of the clicked cell
-            double unseenWidth = levelUI.getFullWidth() - scrollPane.getWidth();
-            double unseedHeight = levelUI.getFullHeight() - scrollPane.getHeight();
-            double cellX = (event.getSceneX() - OFFSET / 2
-                            + unseenWidth * scrollPane.getHvalue()) / CELL_WIDTH;
-            double cellY = (event.getSceneY() - OFFSET / 2
-                            + unseedHeight * scrollPane.getVvalue()) / CELL_HEIGHT;
-            UnmodScreenCoord coord = new UnmodScreenCoord((int)cellX, (int)cellY);
-
+            UnmodScreenCoord coord = getScreenCoordOfMouse(scrollPane, event);
             switch (event.getButton()) {
                 case PRIMARY:   core.putItem(itemType, coord.getW(), coord.getH());
                                 break;
@@ -102,6 +97,24 @@ public class StartFX extends Application {
 
             levelUI.drawItems();
         });
+
+        scrollPane.addEventHandler(MouseEvent.MOUSE_MOVED, event -> {
+            if (!dragging)
+                return;
+            UnmodScreenCoord coord = getScreenCoordOfMouse(scrollPane, event);
+            core.putItem(itemType, coord.getW(), coord.getH());
+            levelUI.drawItems();
+        });
+    }
+
+    private UnmodScreenCoord getScreenCoordOfMouse(ScrollPane scrollPane, MouseEvent event) {
+        double unseenWidth = levelUI.getFullWidth() - scrollPane.getWidth();
+        double unseedHeight = levelUI.getFullHeight() - scrollPane.getHeight();
+        double cellX = (event.getSceneX() - OFFSET / 2
+                + unseenWidth * scrollPane.getHvalue()) / CELL_WIDTH;
+        double cellY = (event.getSceneY() - OFFSET / 2
+                + unseedHeight * scrollPane.getVvalue()) / CELL_HEIGHT;
+        return new UnmodScreenCoord((int)cellX, (int)cellY);
     }
 
     private FileChooser setupFileChooser(String path, String title) {
@@ -135,27 +148,52 @@ public class StartFX extends Application {
         rootContainer.setContent(levelUI.getRoot());
         setupSceneAndStage();
         levelUI.drawItems();
+        rootContainer.requestFocus();
     }
 
+    private int layerCount = 1;
     private void setupKeyPressEvent(ScrollPane scrollPane) {
         scrollPane.addEventHandler(KeyEvent.KEY_TYPED, event -> {
             String key = event.getCharacter();
             switch (key) {
-                case "q": core.movePlayer(Directions.LEFT);
-                    levelUI.drawItems();
-                    break;
+                case "d": dragging = !dragging; break;
+                // item characters
                 case "w": itemType = Cell.Type.WALL; break;
                 case "s": itemType = Cell.Type.BSPACE; break;
                 case "b": itemType = Cell.Type.BOX; break;
                 case "m": itemType = Cell.Type.MARKED_BOX; break;
                 case "p": itemType = Cell.Type.PLAYER; break;
                 case "e": itemType = Cell.Type.EMPTY; break;
+                // cleaning
                 case "c": core.setToDefaultState();
                     levelUI.drawItems();
                     break;
                 case "C": core.removeAllFields();
                     levelUI.drawItems();
                     break;
+                // modify level sizes
+                case "5": layerCount *= -1; break;
+                case "4":
+                    core.addOrRemoveCellLayersOnSide(layerCount, Directions.LEFT);
+                    createNewLevelUIInstance();
+                    setupSceneAndStage();
+                    break;
+                case "8":
+                    core.addOrRemoveCellLayersOnSide(layerCount, Directions.UP);
+                    createNewLevelUIInstance();
+                    setupSceneAndStage();
+                    break;
+                case "6":
+                    core.addOrRemoveCellLayersOnSide(layerCount, Directions.RIGHT);
+                    createNewLevelUIInstance();
+                    setupSceneAndStage();
+                    break;
+                case "2":
+                    core.addOrRemoveCellLayersOnSide(layerCount, Directions.DOWN);
+                    createNewLevelUIInstance();
+                    setupSceneAndStage();
+                    break;
+                // save and load
                 case "S":
                     try {
                         saveLevel(core.getLevelName());
@@ -171,6 +209,25 @@ public class StartFX extends Application {
                     }
                     break;
             }
+        });
+
+        scrollPane.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+            KeyCode keyCode = event.getCode();
+            switch (keyCode) {
+                case LEFT: core.movePlayer(Directions.LEFT);
+                    levelUI.drawItems();
+                    break;
+                case UP: core.movePlayer(Directions.UP);
+                    levelUI.drawItems();
+                    break;
+                case RIGHT: core.movePlayer(Directions.RIGHT);
+                    levelUI.drawItems();
+                    break;
+                case DOWN: core.movePlayer(Directions.DOWN);
+                    levelUI.drawItems();
+                    break;
+            }
+            event.consume();
         });
     }
 

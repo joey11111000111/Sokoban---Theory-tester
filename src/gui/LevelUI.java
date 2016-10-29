@@ -114,6 +114,8 @@ class LevelUI {
             case PLAYER: item.setFill(Color.TEAL); break;
             case PLAYER_ON_BSPACE: item.setFill(Color.rgb(160, 160, 255)); break;
             case BOX_ON_BSPACE: item.setFill(Color.rgb(190, 170, 70)); break;
+//            case MARKED_BOX_ON_BSPACE: item.setFill(Color.rgb(150, 200, 130)); break;
+            case MARKED_BOX_ON_BSPACE: item.setFill(Color.GOLD); break;
             default: item.setFill(Color.RED);
         }
 

@@ -54,7 +54,7 @@ public class LevelStructure {
         return isActiveLevelCell(coord.getW(), coord.getH());
     }
     public boolean isActiveLevelCell(int w, int h) {
-        return isValidCoord(w, h) && !isSurroundingWallOf(structure, w, h);
+        return isValidCoord(w, h) && !isSurroundingWallOf(structure, w, h) && structure[w][h];
     }
 
     public void addCellsToSide(int layerCount, Directions dir) {
@@ -84,7 +84,7 @@ public class LevelStructure {
     }
 
     /* This method should not be touched */
-    public void addOrRemoveCellLayersOnSide(int layerCount, Directions dir) {
+    public boolean addOrRemoveCellLayersOnSide(int layerCount, Directions dir) {
         int modW = 0, modH = 0;
         switch (dir) {
             case LEFT: modW = -1; break;
@@ -93,17 +93,19 @@ public class LevelStructure {
             case DOWN: modH = 1; break;
         }
 
-        int sign = sign(layerCount);
+        int sign = getSignOfNumber(layerCount);
         int newWidth = structure.length + sign * Math.abs(modW * layerCount);
         int newHeight = structure[0].length + sign * Math.abs(modH * layerCount);
+        if (newWidth < MIN_WIDTH || newHeight < MIN_HEIGHT)
+            return false;
+
         boolean[][] newStructure = new boolean[newWidth][newHeight];
         setToDefaultState(newStructure);
 
         int smallerCellWidth = (structure.length < newWidth) ? structure.length : newWidth;
         int smallerCellHeight = (structure[0].length < newHeight) ? structure[0].length : newHeight;
-        boolean isCut = smallerCellWidth == newWidth;
-        int startW = (isCut) ? 1 + structure.length - newWidth : 1;
-        int startH = (isCut) ? 1 + structure[0].length - newHeight : 1;
+        int startW = (modW == -1 && sign == -1) ? 1 + structure.length - newWidth : 1;
+        int startH = (modH == -1 && sign == -1) ? 1 + structure[0].length - newHeight : 1;
         int endW = startW + smallerCellWidth - 2;
         int endH = startH + smallerCellHeight - 2;
         for (int w = startW; w < endW; w++) {
@@ -115,7 +117,17 @@ public class LevelStructure {
         }
 
         structure = newStructure;
+        return true;
     }
+
+    public boolean isValidCoord(int w, int h) {
+        return !(w < 0 || h < 0 || w >= structure.length || h >= structure[0].length);
+    }
+
+    public boolean isValidCoord(UnmodScreenCoord coord) {
+        return isValidCoord(coord.getW(), coord.getH());
+    }
+
 
     public int getWidthCellCount() {
         return structure.length;
@@ -126,17 +138,13 @@ public class LevelStructure {
 
     private void validateCoord(int w, int h) {
         if (!isValidCoord(w, h))
-            throw new IllegalArgumentException("The given cell is out of the level!");
-    }
-
-    private boolean isValidCoord(int w, int h) {
-        return !(w < 0 || h < 0 || w >= structure.length || h >= structure[0].length);
+        throw new IllegalArgumentException("The given cell is out of the level!");
     }
 
     private void setToDefaultState(boolean[][] lvlStructure) {
         for (int w = 0; w < lvlStructure.length; w++) {
             for (int h = 0; h < lvlStructure[0].length; h++) {
-                structure[w][h] = !isSurroundingWallOf(lvlStructure, w, h);
+                lvlStructure[w][h] = !isSurroundingWallOf(lvlStructure, w, h);
             }
         }
     }
@@ -145,7 +153,7 @@ public class LevelStructure {
         return w == 0 || w == lvlStructure.length - 1 || h == 0 || h == lvlStructure[0].length - 1;
     }
 
-    private int sign(int num) {
+    private int getSignOfNumber(int num) {
         if (num == 0)
             return 1;
         return num / Math.abs(num);
