@@ -1,12 +1,13 @@
 package logic;
 
+import util.Size;
 import util.UnmodScreenCoord;
 import util.Directions;
 
 public class LevelStructure {
 
-    public static final int MIN_WIDTH = 4;
-    public static final int MIN_HEIGHT = 4;
+    public static final int MIN_WIDTH = 6;
+    public static final int MIN_HEIGHT = 6;
 
     private boolean[][] structure;
 
@@ -57,61 +58,27 @@ public class LevelStructure {
         return isValidCoord(w, h) && !isSurroundingWallOf(structure, w, h) && structure[w][h];
     }
 
-    public void addCellsToSide(int layerCount, Directions dir) {
-        int modW = 0, modH = 0;
-        switch (dir) {
-            case LEFT: modW = -1; break;
-            case UP: modH = -1; break;
-            case RIGHT: modW = 1; break;
-            case DOWN: modH = 1; break;
-        }
-
-        int newWidth = Math.abs(modW * layerCount) + structure.length;
-        int newHeight = Math.abs(modH * layerCount) + structure[0].length;
-
-        boolean[][] newStructure = new boolean[newWidth][newHeight];
-        setToDefaultState(newStructure);
-        // Don't copy the surrounding walls
-        for (int w = 1; w < structure.length - 1; w++) {
-            for (int h = 1; h < structure[0].length - 1; h++) {
-                int newW = (modW == -1) ? layerCount + w : w;
-                int newH = (modH == -1) ? layerCount + h : h;
-                newStructure[newW][newH] = structure[w][h];
-            }
-        }
-
-        structure = newStructure;
-    }
-
-    /* This method should not be touched */
     public boolean addOrRemoveCellLayersOnSide(int layerCount, Directions dir) {
-        int modW = 0, modH = 0;
-        switch (dir) {
-            case LEFT: modW = -1; break;
-            case UP: modH = -1; break;
-            case RIGHT: modW = 1; break;
-            case DOWN: modH = 1; break;
-        }
+        int dirW = dir.getDirWidth();
+        int dirH = dir.getDirHeight();
 
-        int sign = getSignOfNumber(layerCount);
-        int newWidth = structure.length + sign * Math.abs(modW * layerCount);
-        int newHeight = structure[0].length + sign * Math.abs(modH * layerCount);
-        if (newWidth < MIN_WIDTH || newHeight < MIN_HEIGHT)
+        Size oldSize = new Size(structure.length, structure[0].length);
+        Size newSize = calcNewSize(oldSize, layerCount, dirW, dirH);
+        if (newSize.getWidth() < MIN_WIDTH || newSize.getHeight() < MIN_HEIGHT)
             return false;
+        Size smallerSize = Size.smallerSize(oldSize, newSize);
 
-        boolean[][] newStructure = new boolean[newWidth][newHeight];
+        boolean[][] newStructure = new boolean[newSize.getWidth()][newSize.getHeight()];
         setToDefaultState(newStructure);
 
-        int smallerCellWidth = (structure.length < newWidth) ? structure.length : newWidth;
-        int smallerCellHeight = (structure[0].length < newHeight) ? structure[0].length : newHeight;
-        int startW = (modW == -1 && sign == -1) ? 1 + structure.length - newWidth : 1;
-        int startH = (modH == -1 && sign == -1) ? 1 + structure[0].length - newHeight : 1;
-        int endW = startW + smallerCellWidth - 2;
-        int endH = startH + smallerCellHeight - 2;
+        int startW = (isCutFromBeginning(layerCount, dirW)) ? 1 + oldSize.getWidth() - newSize.getWidth() : 1;
+        int startH = (isCutFromBeginning(layerCount, dirH)) ? 1 + oldSize.getHeight() - newSize.getHeight() : 1;
+        int endW = startW + smallerSize.getWidth() - 2;
+        int endH = startH + smallerSize.getHeight() - 2;
         for (int w = startW; w < endW; w++) {
             for (int h = startH; h < endH; h++) {
-                int newW = (modW == -1) ? w + layerCount : w;
-                int newH = (modH == -1) ? h + layerCount : h;
+                int newW = (dir == Directions.LEFT) ? w + layerCount : w;
+                int newH = (dir == Directions.UP) ? h + layerCount : h;
                 newStructure[newW][newH] = structure[w][h];
             }
         }
@@ -149,13 +116,19 @@ public class LevelStructure {
         }
     }
 
+    private boolean isCutFromBeginning(int layerCount, int modDir) {
+        return layerCount < 0 && modDir == -1;
+    }
+
+    private Size calcNewSize(Size oldSize, int layerCount, int dirW, int dirH) {
+        int sign = (layerCount < 0) ? -1 : 1;
+        int newWidth = oldSize.getWidth() + sign * Math.abs(dirW * layerCount);
+        int newHeight = oldSize.getHeight() + sign * Math.abs(dirH * layerCount);
+        return new Size(newWidth, newHeight);
+    }
+
     private boolean isSurroundingWallOf(boolean[][] lvlStructure, int w, int h) {
         return w == 0 || w == lvlStructure.length - 1 || h == 0 || h == lvlStructure[0].length - 1;
     }
 
-    private int getSignOfNumber(int num) {
-        if (num == 0)
-            return 1;
-        return num / Math.abs(num);
-    }
 }

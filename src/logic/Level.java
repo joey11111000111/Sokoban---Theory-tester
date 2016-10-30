@@ -267,14 +267,6 @@ public class Level {
         mergedContent[w][h].setType(Cell.Type.EMPTY);
     }
 
-    private void buildLevelByMergedContent() {
-        for (int w = 0; w < mergedContent.length; w++) {
-            for (int h = 0; h < mergedContent[0].length; h++) {
-
-            }
-        }
-    }
-
     private void setToBoxType(UnmodScreenCoord coord) {
         Box box = boxes.get(coord);
         int w = coord.getW(), h = coord.getH();
