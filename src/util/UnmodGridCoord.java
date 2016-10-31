@@ -1,11 +1,11 @@
 package util;
 
-public class UnmodScreenCoord {
+public class UnmodGridCoord {
 
     private int w;
     private int h;
 
-    public UnmodScreenCoord(int w, int h) {
+    public UnmodGridCoord(int w, int h) {
         this.w = w;
         this.h = h;
     }
@@ -30,7 +30,7 @@ public class UnmodScreenCoord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UnmodScreenCoord coord = (UnmodScreenCoord) o;
+        UnmodGridCoord coord = (UnmodGridCoord) o;
 
         if (w != coord.w) return false;
         return h == coord.h;

@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import logic.Cell;
 import logic.Core;
 import util.Directions;
-import util.UnmodScreenCoord;
+import util.UnmodGridCoord;
 
 import java.io.File;
 
@@ -83,15 +83,18 @@ public class StartFX extends Application {
 
     private void setupMouseClickEvent(ScrollPane scrollPane) {
         scrollPane.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
-            UnmodScreenCoord coord = getScreenCoordOfMouse(scrollPane, event);
+            UnmodGridCoord coord = getScreenCoordOfMouse(scrollPane, event);
             switch (event.getButton()) {
                 case PRIMARY:   core.putItem(itemType, coord.getW(), coord.getH());
                                 break;
-                case SECONDARY: try {core.calcFieldOf(coord.getW(), coord.getH());}
-                                catch (IllegalArgumentException iae) {
-                                    System.out.println(iae.getMessage());
-                                }
-                                break;
+                case SECONDARY:
+                    try {
+                        core.calcFieldOf(coord.getW(), coord.getH());
+                    }
+                    catch (IllegalArgumentException iae) {
+                        System.out.println(iae.getMessage());
+                    }
+                    break;
                 default:    System.out.println("No middle-button click function is available yet.");
             }
 
@@ -101,20 +104,20 @@ public class StartFX extends Application {
         scrollPane.addEventHandler(MouseEvent.MOUSE_MOVED, event -> {
             if (!dragging)
                 return;
-            UnmodScreenCoord coord = getScreenCoordOfMouse(scrollPane, event);
+            UnmodGridCoord coord = getScreenCoordOfMouse(scrollPane, event);
             core.putItem(itemType, coord.getW(), coord.getH());
             levelUI.drawItems();
         });
     }
 
-    private UnmodScreenCoord getScreenCoordOfMouse(ScrollPane scrollPane, MouseEvent event) {
+    private UnmodGridCoord getScreenCoordOfMouse(ScrollPane scrollPane, MouseEvent event) {
         double unseenWidth = levelUI.getFullWidth() - scrollPane.getWidth();
         double unseedHeight = levelUI.getFullHeight() - scrollPane.getHeight();
         double cellX = (event.getSceneX() - OFFSET / 2
                 + unseenWidth * scrollPane.getHvalue()) / CELL_WIDTH;
         double cellY = (event.getSceneY() - OFFSET / 2
                 + unseedHeight * scrollPane.getVvalue()) / CELL_HEIGHT;
-        return new UnmodScreenCoord((int)cellX, (int)cellY);
+        return new UnmodGridCoord((int)cellX, (int)cellY);
     }
 
     private FileChooser setupFileChooser(String path, String title) {

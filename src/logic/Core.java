@@ -1,7 +1,7 @@
 package logic;
 
 import io.LevelIOException;
-import util.UnmodScreenCoord;
+import util.UnmodGridCoord;
 import util.Directions;
 
 import java.io.File;
@@ -9,7 +9,7 @@ import java.io.File;
 public interface Core {
 
     Cell[][] getCellContent();
-    void putItem(Cell.Type type, UnmodScreenCoord coord);
+    void putItem(Cell.Type type, UnmodGridCoord coord);
     void putItem(Cell.Type type, int w, int h);
     void setToDefaultState();
     void removeAllFields();

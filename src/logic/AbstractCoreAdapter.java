@@ -4,7 +4,7 @@ import io.LevelIO;
 import io.LevelIOException;
 import io.LevelState;
 import io.NoSQLLevelIO;
-import util.UnmodScreenCoord;
+import util.UnmodGridCoord;
 import util.Directions;
 
 import java.io.File;
@@ -25,7 +25,7 @@ abstract class AbstractCoreAdapter implements Core {
     }
 
     @Override
-    public void putItem(Cell.Type type, UnmodScreenCoord coord) {
+    public void putItem(Cell.Type type, UnmodGridCoord coord) {
         level.putItem(type, coord);
     }
 

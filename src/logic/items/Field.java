@@ -14,6 +14,10 @@ public class Field {
         return new Field(field.getItemID(), field.getFieldType());
     }
 
+    public static Field incrementFieldValue(Field field) {
+        return new Field(field.getItemID(), field.getFieldType(), field.getValue() + 1);
+    }
+
     private Integer itemID;
     private FieldTypes fieldType;
     private Integer value;

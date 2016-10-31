@@ -51,8 +51,7 @@ public class Cell {
     }
 
     void setToFieldType(Integer fieldValue) {
-        if (type != Type.FIELD)
-            throw new IllegalStateException("Only FIELD type cells can have a field value!");
+        this.type = Type.FIELD;
         this.fieldValue = fieldValue;
     }
 }

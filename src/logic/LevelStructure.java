@@ -1,7 +1,7 @@
 package logic;
 
 import util.Size;
-import util.UnmodScreenCoord;
+import util.UnmodGridCoord;
 import util.Directions;
 
 public class LevelStructure {
@@ -24,7 +24,7 @@ public class LevelStructure {
         setToDefaultState(structure);
     }
 
-    public boolean isCellOfLevel(UnmodScreenCoord c) {
+    public boolean isCellOfLevel(UnmodGridCoord c) {
         return isCellOfLevel(c.getW(), c.getH());
     }
     public boolean isCellOfLevel(int w, int h) {
@@ -33,7 +33,7 @@ public class LevelStructure {
         return structure[w][h];
     }
 
-    public void excludeCell(UnmodScreenCoord c) {
+    public void excludeCell(UnmodGridCoord c) {
         excludeCell(c.getW(), c.getH());
     }
     public void excludeCell(int w, int h) {
@@ -42,7 +42,7 @@ public class LevelStructure {
             structure[w][h] = false;
     }
 
-    public void includeCell(UnmodScreenCoord c) {
+    public void includeCell(UnmodGridCoord c) {
         includeCell(c.getW(), c.getH());
     }
     public void includeCell(int w, int h) {
@@ -51,7 +51,7 @@ public class LevelStructure {
             structure[w][h] = true;
     }
 
-    public boolean isActiveLevelCell(UnmodScreenCoord coord) {
+    public boolean isActiveLevelCell(UnmodGridCoord coord) {
         return isActiveLevelCell(coord.getW(), coord.getH());
     }
     public boolean isActiveLevelCell(int w, int h) {
@@ -91,7 +91,7 @@ public class LevelStructure {
         return !(w < 0 || h < 0 || w >= structure.length || h >= structure[0].length);
     }
 
-    public boolean isValidCoord(UnmodScreenCoord coord) {
+    public boolean isValidCoord(UnmodGridCoord coord) {
         return isValidCoord(coord.getW(), coord.getH());
     }
 
