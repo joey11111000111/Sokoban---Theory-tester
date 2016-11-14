@@ -11,6 +11,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import logic.Cell;
 import logic.Core;
+import logic.items.Field;
 import util.Directions;
 import util.UnmodGridCoord;
 
@@ -85,8 +86,9 @@ public class StartFX extends Application {
         scrollPane.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
             UnmodGridCoord coord = getScreenCoordOfMouse(scrollPane, event);
             switch (event.getButton()) {
-                case PRIMARY:   core.putItem(itemType, coord.getW(), coord.getH());
-                                break;
+                case PRIMARY:
+                    core.putItem(itemType, coord.getW(), coord.getH());
+                    break;
                 case SECONDARY:
                     try {
                         core.calcFieldOf(coord.getW(), coord.getH());
@@ -95,10 +97,11 @@ public class StartFX extends Application {
                         System.out.println(iae.getMessage());
                     }
                     break;
-                default:    System.out.println("No middle-button click function is available yet.");
+                case MIDDLE:
+                    core.setChosenItem(coord);
+                    break;
+                default:    System.out.println("No NONE click function is available.");
             }
-
-            levelUI.drawItems();
         });
 
         scrollPane.addEventHandler(MouseEvent.MOUSE_MOVED, event -> {
@@ -106,7 +109,6 @@ public class StartFX extends Application {
                 return;
             UnmodGridCoord coord = getScreenCoordOfMouse(scrollPane, event);
             core.putItem(itemType, coord.getW(), coord.getH());
-            levelUI.drawItems();
         });
     }
 
@@ -150,7 +152,6 @@ public class StartFX extends Application {
         createNewLevelUIInstance();
         rootContainer.setContent(levelUI.getRoot());
         setupSceneAndStage();
-        levelUI.drawItems();
         rootContainer.requestFocus();
     }
 
@@ -159,7 +160,17 @@ public class StartFX extends Application {
         scrollPane.addEventHandler(KeyEvent.KEY_TYPED, event -> {
             String key = event.getCharacter();
             switch (key) {
+                case "a":
+                    core.calcAllFields();
+                    break;
                 case "d": dragging = !dragging; break;
+                // set chosen field type
+                case "D":
+                    core.setChosenFieldType(Field.FieldTypes.BOX_FIELD);
+                    break;
+                case "J":
+                    core.setChosenFieldType(Field.FieldTypes.PLAYER_FIELD);
+                    break;
                 // item characters
                 case "w": itemType = Cell.Type.WALL; break;
                 case "s": itemType = Cell.Type.BSPACE; break;
@@ -169,10 +180,8 @@ public class StartFX extends Application {
                 case "e": itemType = Cell.Type.EMPTY; break;
                 // cleaning
                 case "c": core.setToDefaultState();
-                    levelUI.drawItems();
                     break;
                 case "C": core.removeAllFields();
-                    levelUI.drawItems();
                     break;
                 // modify level sizes
                 case "5": layerCount *= -1; break;
@@ -217,17 +226,14 @@ public class StartFX extends Application {
         scrollPane.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             KeyCode keyCode = event.getCode();
             switch (keyCode) {
-                case LEFT: core.movePlayer(Directions.LEFT);
-                    levelUI.drawItems();
+                case LEFT:
+                    core.movePlayer(Directions.LEFT);
                     break;
                 case UP: core.movePlayer(Directions.UP);
-                    levelUI.drawItems();
                     break;
                 case RIGHT: core.movePlayer(Directions.RIGHT);
-                    levelUI.drawItems();
                     break;
                 case DOWN: core.movePlayer(Directions.DOWN);
-                    levelUI.drawItems();
                     break;
             }
             event.consume();

@@ -1,10 +1,12 @@
 package logic;
 
 import io.LevelIOException;
+import logic.items.Field;
 import util.UnmodGridCoord;
 import util.Directions;
 
 import java.io.File;
+import java.util.function.Consumer;
 
 public interface Core {
 
@@ -23,4 +25,12 @@ public interface Core {
     String getSaveDirectoryPath();
 
     void calcFieldOf(int x, int y);
+    void calcAllFields();
+
+    void setChosenFieldType(Field.FieldTypes type);
+    Field.FieldTypes getChosenFieldType();
+    void setChosenItem(UnmodGridCoord coord);
+
+    // Test methods
+    void setMergedContentChangeAction(Consumer<UnmodGridCoord> action);
 }

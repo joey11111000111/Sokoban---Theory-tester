@@ -2,7 +2,7 @@ package logic.items;
 
 public class Field {
 
-    public static enum FieldTypes {
+    public enum FieldTypes {
         PLAYER_FIELD, BOX_FIELD;
     }
 

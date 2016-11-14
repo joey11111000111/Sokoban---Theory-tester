@@ -8,6 +8,11 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
+import logic.items.Field;
+import util.UnmodGridCoord;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static logic.Cell.Type.EMPTY;
 import static logic.Cell.Type.FIELD;
@@ -25,6 +30,7 @@ class LevelUI {
 
     private Group root;
     private Group items;
+    private Map<UnmodGridCoord, Shape> drawnItems;
     private Core core;
 
     LevelUI(int cellWidth, int cellHeight, Core core) {
@@ -35,12 +41,16 @@ class LevelUI {
         CELL_HEIGHT = cellHeight;
         root = new Group();
         items = new Group();
+        drawnItems = new HashMap<>();
         createBackground();
         root.getChildren().add(items);
 
         WIDTH = CELL_WIDTH * ROW_LENGTH + OFFSET;
         HEIGHT = CELL_HEIGHT * COL_LENGTH + OFFSET;
-        drawItems();
+
+        core.setMergedContentChangeAction(this::drawItemAt);
+
+        redrawAllItems();
     }
 
     private void createBackground() {
@@ -95,7 +105,10 @@ class LevelUI {
     private Shape createItem(Cell.Type type, Integer fieldValue) {
         if (type == FIELD) {
             Text fieldText = new Text(fieldValue.toString());
-            fieldText.setStroke(Color.rgb(150, 200, 230));
+            if (core.getChosenFieldType() == Field.FieldTypes.PLAYER_FIELD)
+                fieldText.setStroke(Color.rgb(150, 200, 230));
+            else
+                fieldText.setStroke(Color.rgb(200, 150, 50));
             fieldText.setOpacity(0.9);
             int numOfDigits = fieldValue.toString().length();
             fieldText.setTranslateX(CELL_WIDTH / 2 - numOfDigits * 4);
@@ -114,7 +127,6 @@ class LevelUI {
             case PLAYER: item.setFill(Color.TEAL); break;
             case PLAYER_ON_BSPACE: item.setFill(Color.rgb(160, 160, 255)); break;
             case BOX_ON_BSPACE: item.setFill(Color.rgb(190, 170, 70)); break;
-//            case MARKED_BOX_ON_BSPACE: item.setFill(Color.rgb(150, 200, 130)); break;
             case MARKED_BOX_ON_BSPACE: item.setFill(Color.GOLD); break;
             default: item.setFill(Color.RED);
         }
@@ -122,8 +134,9 @@ class LevelUI {
         return item;
     }
 
-    void drawItems() {
+    private void redrawAllItems() {
         items.getChildren().clear();
+        drawnItems.clear();
         Cell[][] cells = core.getCellContent();
         for (int x = 0; x < cells.length; x++) {
             for (int y = 0; y < cells[0].length; y++) {
@@ -133,12 +146,34 @@ class LevelUI {
                 double coordX = x * CELL_WIDTH;
                 double coordY = y * CELL_HEIGHT;
 
-                Shape wall = createItem(cells[x][y].getType(), cells[x][y].getFieldValue());
-                wall.setLayoutX(coordX + OFFSET / 2);
-                wall.setLayoutY(coordY + OFFSET / 2);
-                items.getChildren().add(wall);
+                Shape item = createItem(cells[x][y].getType(), cells[x][y].getFieldValue());
+                item.setLayoutX(coordX + OFFSET / 2);
+                item.setLayoutY(coordY + OFFSET / 2);
+                items.getChildren().add(item);
+                drawnItems.put(new UnmodGridCoord(x, y), item);
             }//for
         }
+    }
+
+    void drawItemAt(UnmodGridCoord coord) {
+        if (coord == null)
+            return;
+        items.getChildren().remove(drawnItems.get(coord));
+        drawnItems.remove(coord);
+        int x = coord.getW();
+        int y = coord.getH();
+        Cell[][] cells = core.getCellContent();
+        if (cells[x][y].getType() == EMPTY)
+            return;
+
+        double coordX = x * CELL_WIDTH;
+        double coordY = y * CELL_HEIGHT;
+
+        Shape item = createItem(cells[x][y].getType(), cells[x][y].getFieldValue());
+        item.setLayoutX(coordX + OFFSET / 2);
+        item.setLayoutY(coordY + OFFSET / 2);
+        items.getChildren().add(item);
+        drawnItems.put(coord, item);
     }
 
 }//class

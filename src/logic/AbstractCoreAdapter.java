@@ -4,10 +4,12 @@ import io.LevelIO;
 import io.LevelIOException;
 import io.LevelState;
 import io.NoSQLLevelIO;
+import logic.items.Field;
 import util.UnmodGridCoord;
 import util.Directions;
 
 import java.io.File;
+import java.util.function.Consumer;
 
 abstract class AbstractCoreAdapter implements Core {
 
@@ -85,6 +87,34 @@ abstract class AbstractCoreAdapter implements Core {
         level = new Level(cells, levelFile.getName());
     }
 
+    @Override
+    public void setChosenFieldType(Field.FieldTypes type) {
+        level.setChosenFieldType(type);
+    }
+
+    @Override
+    public void setChosenItem(UnmodGridCoord coord) {
+        level.setChosenItem(coord);
+    }
+
+    @Override
+    public Field.FieldTypes getChosenFieldType() {
+        return level.getChosenFieldType();
+    }
+
+    // test methods
 
 
+    @Override
+    public void setMergedContentChangeAction(Consumer<UnmodGridCoord> action) {
+        level.setMergedContentChangeAction(action);
+    }
+
+    @Override
+    public void calcAllFields() {
+        level.getBoxes().keySet()
+                .forEach(coord -> calcFieldOf(coord.getW(), coord.getH()));
+        level.getBoxSpaces().keySet()
+                .forEach(coord -> calcFieldOf(coord.getW(), coord.getH()));
+    }
 }

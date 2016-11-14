@@ -1,13 +1,16 @@
 package logic;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import logic.items.Box;
 import logic.items.BoxSpace;
 import logic.items.Field;
 import logic.items.IdentifiableItem;
-import util.UnmodGridCoord;
 import util.Directions;
+import util.UnmodGridCoord;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class Level {
 
@@ -20,8 +23,8 @@ public class Level {
     private Map<UnmodGridCoord, BoxSpace> bspaces;
     private Map<UnmodGridCoord, List<Field>> fields;
 
+    private ObjectProperty<UnmodGridCoord> mergedContentChangeProperty;
     private Cell[][] mergedContent;
-    private Cell.Type chosenItemType;
     private Field chosenField;
 
     public Level() {
@@ -38,6 +41,7 @@ public class Level {
     public Level(Cell[][] mergedContent, String levelName) {
         this.structure = new LevelStructure(mergedContent.length, mergedContent[0].length);
         this.mergedContent = mergedContent;
+        mergedContentChangeProperty = new SimpleObjectProperty<>();
         this.levelName = levelName;
 
         initItemHolders();
@@ -50,26 +54,42 @@ public class Level {
         recalculateAllMergedContent();
     }
 
-    public void setchosenField(Field field) {
+    public void setChosenField(Field field) {
         if (!field.isTemplateField())
             throw new IllegalArgumentException("The chosen field must be a template field!");
         chosenField = field;
         recalculateAllMergedContent();
     }
 
-    public Optional<Integer> getIdOfSource(UnmodGridCoord coord) {
-        Map<UnmodGridCoord, ? extends IdentifiableItem> searchMap;
-        switch (chosenItemType) {
-            case BOX: searchMap = boxes; break;
-            case BSPACE: searchMap = bspaces; break;
-            default: throw new IllegalStateException("Coding error!");
+    public void setChosenFieldType(Field.FieldTypes type) {
+        Field tmp;
+        if (chosenField != null)
+            tmp = new Field(chosenField.getItemID(), type, 0);
+        else
+            tmp = new Field(-1, type, 0);
+        chosenField = Field.createFieldTemplate(tmp);
+        recalculateAllMergedContent();
+    }
+
+    public Field.FieldTypes getChosenFieldType() {
+        return chosenField.getFieldType();
+    }
+
+    public void setChosenItem(UnmodGridCoord coord) {
+        IdentifiableItem chosenItem;
+        if (boxes.containsKey(coord))
+            chosenItem = boxes.get(coord);
+        else
+            chosenItem = bspaces.get(coord);
+
+        if (chosenItem != null) {
+            System.out.println("is null: " + (chosenField == null));
+            Field tmp = new Field(chosenItem.getId(), chosenField.getFieldType(), 0);
+            if (chosenItem.getId() != chosenField.getItemID()) {
+                chosenField = Field.createFieldTemplate(tmp);
+                recalculateAllMergedContent();
+            }
         }
-
-        if (!searchMap.containsKey(coord))
-            return Optional.empty();
-        Integer id = searchMap.get(coord).getId();
-
-        return Optional.of(id);
     }
 
     public void putItem(Cell.Type type, int w, int h) {
@@ -204,28 +224,9 @@ public class Level {
         if (chosenField != null && field.isSameTypeAndSource(chosenField))
             calcMergeContentOfCoord(coord);
     }
-    void putField(Field field, int w, int h) {
-        putField(field, new UnmodGridCoord(w, h));
-    }
-    void putField(Field template, UnmodGridCoord coord, int value) {
-        Field field = new Field(template.getItemID(), template.getFieldType(), value);
-        putField(field, coord);
-    }
 
     public String getLevelName() {
         return levelName;
-    }
-
-    public Field getChosenField() {
-        return chosenField;
-    }
-
-    public void setBoxMarkAt(UnmodGridCoord coord, boolean marked) {
-        Box box = boxes.get(coord);
-        if (box == null)
-            throw new IllegalArgumentException("No box found at the given coordinate!");
-        box.setMarked(marked);
-        calcMergeContentOfCoord(coord);
     }
 
     public void setLevelName(String name) {
@@ -235,26 +236,10 @@ public class Level {
     public Cell[][] getMergedContent() {
         return mergedContent;
     }
-
-    // -----------------------------------------------------------
-    public boolean isEmptyAt(UnmodGridCoord coord, Field respectedField) {
-        boolean isEmptyOrField = structure.isActiveLevelCell(coord)
-                && !boxes.containsKey(coord)
-                && !bspaces.containsKey(coord)
-                && !coord.equals(player);
-        if (!isEmptyOrField)
-            return false;
-
-        if (!fields.containsKey(coord))
-            return true;
-
-        List<Field> fieldList = fields.get(coord);
-        for (Field f : fieldList)
-            if (respectedField.isSameTypeAndSource(f))
-                return false;
-        return true;
+    public ObjectProperty<UnmodGridCoord> getMergedContentChangeProperty() {
+        return mergedContentChangeProperty;
     }
-    // --------------------------------------------------------------
+
     public Map<UnmodGridCoord, Box> getBoxes() {
         return Collections.unmodifiableMap(boxes);
     }
@@ -273,39 +258,53 @@ public class Level {
         return structure.isActiveLevelCell(coord);
     }
 
-    private void recalculateAllMergedContent() {
+    void recalculateAllMergedContent() {
         for (int w = 0; w < mergedContent.length; w++)
             for (int h = 0; h < mergedContent[0].length; h++)
                 calcMergeContentOfCoord(new UnmodGridCoord(w, h));
     }
 
+    public void setMergedContentChangeAction(Consumer<UnmodGridCoord> action) {
+        mergedContentChangeProperty.addListener((observable, oldValue, newValue) -> action.accept(newValue));
+    }
+
     private void calcMergeContentOfCoord(UnmodGridCoord coord) {
+        // No change event happens if I try to set it to the value that equals to it's current value
+        if (coord.equals(mergedContentChangeProperty.getValue()))
+            mergedContentChangeProperty.setValue(null);
+
         int w = coord.getW(), h = coord.getH();
         if (!structure.isActiveLevelCell(w, h)) {
             mergedContent[w][h].setType(Cell.Type.WALL);
+            mergedContentChangeProperty.setValue(coord);
             return;
         }
         if (boxes.containsKey(coord)) {
             setToBoxType(coord);
+            mergedContentChangeProperty.setValue(coord);
             return;
         }
 
         if (coord.equals(player)) {
             setToPlayerType(coord);
+            mergedContentChangeProperty.setValue(coord);
             return;
         }
 
         if (bspaces.containsKey(coord)) {
             mergedContent[w][h].setType(Cell.Type.BSPACE);
+            mergedContentChangeProperty.setValue(coord);
             return;
         }
 
         if (fields.containsKey(coord)) {
             setToFieldType(coord);
+            mergedContentChangeProperty.setValue(coord);
             return;
         }
 
         mergedContent[w][h].setType(Cell.Type.EMPTY);
+        mergedContentChangeProperty.setValue(coord);
     }
 
     private void setToBoxType(UnmodGridCoord coord) {
@@ -344,7 +343,7 @@ public class Level {
         boxes = new HashMap<>();
         bspaces = new HashMap<>();
         fields = new HashMap<>();
-        chosenField = null;
+        chosenField = Field.createFieldTemplate(new Field(-1, Field.FieldTypes.PLAYER_FIELD, 0));
     }
 
     private void initMergedContent() {
@@ -354,6 +353,7 @@ public class Level {
                 mergedContent[w][h] = new Cell();
             }
         }
+        mergedContentChangeProperty = new SimpleObjectProperty<>();
     }
 
     private void decodeStructureAndItems() {

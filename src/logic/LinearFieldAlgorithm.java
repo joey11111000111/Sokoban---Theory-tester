@@ -21,8 +21,6 @@ public class LinearFieldAlgorithm extends AbstractCoreAdapter {
             calcPlayerFieldOf(boxes.get(sourceCoord), sourceCoord);
         if (bspaces.containsKey(sourceCoord))
             calcPlayerFieldOf(bspaces.get(sourceCoord), sourceCoord);
-
-        System.out.println("Eljutott eddig");
     }
 
     private void calcPlayerFieldOf(IdentifiableItem source, UnmodGridCoord sourceCoord) {
@@ -54,8 +52,6 @@ public class LinearFieldAlgorithm extends AbstractCoreAdapter {
             currentCells = nextCells;
             nextCells = new HashSet<>();
         }
-
-        level.setchosenField(Field.createFieldTemplate(fieldItem));
     }
 
     private Set<UnmodGridCoord> getValidNeighboursForPlayerField(UnmodGridCoord coord, Field templateField) {
