@@ -1,2 +1,8 @@
 out/*
 Levels
+.*
+*.?ml
+*.class
+*.jar
+*library*
+*idea*
